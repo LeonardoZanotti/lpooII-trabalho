@@ -10,7 +10,7 @@ package lpooii_work.classes;
  */
 public class Cliente {
     private String nome, sobrenome, rg, cpf, endereco;
-    private int conta;
+    private int id, conta;
     
     public Cliente(String nome, String sobrenome, String rg, String cpf, String endereco, int conta) {
         this.nome = nome;

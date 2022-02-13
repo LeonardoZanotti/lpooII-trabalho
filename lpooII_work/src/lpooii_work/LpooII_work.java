@@ -4,17 +4,27 @@
  */
 package lpooii_work;
 
+import lpooii_work.screen.UserScreen;
+
 /**
  *
  * @author leonardozanotti
  */
-public class LpooII_work {
-
+public class LpooII_work implements Runnable {
+    UserScreen userScreen = new UserScreen();
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        new Thread(new LpooII_work()).start();
+    }
+    
+    @Override
+    public void run() {
+        while (true) {
+            userScreen.repaint();
+        }
     }
     
 }
