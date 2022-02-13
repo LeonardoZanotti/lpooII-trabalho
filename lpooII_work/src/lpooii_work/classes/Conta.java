@@ -18,12 +18,13 @@ public class Conta implements ContaI {
     
     @Override
     public boolean deposita(double valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return valor > 0;
     }
 
     @Override
     public boolean saca(double valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // show message in the screen
+        return valor > 0;
     }
 
     @Override

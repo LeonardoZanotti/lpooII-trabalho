@@ -9,5 +9,11 @@ package lpooii_work.classes;
  * @author leonardozanotti
  */
 public class ContaInvestimento extends Conta {
+    private double montanteMinimo, depositoMinimo, depositoInicial;
     
+    public ContaInvestimento(double montanteMinimo, double depositoMinimo, double depositoInicial) {
+        this.montanteMinimo = montanteMinimo;
+        this.depositoMinimo = depositoMinimo;
+        this.depositoInicial = depositoInicial;
+    }
 }
