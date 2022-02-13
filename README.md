@@ -1,6 +1,9 @@
 # Trabalho de LPOOII
 Projeto de Java Ant utilizando JDK 11
 
+Diagrama entidade relacionamento
+
+![Banco de dados](./database.png)
 
 ### Comandos Git
 ```
