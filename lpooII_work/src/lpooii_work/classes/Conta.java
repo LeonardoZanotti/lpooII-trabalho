@@ -10,41 +10,46 @@ import lpooii_work.models.ContaI;
  *
  * @author leonardozanotti
  */
-public class Conta implements ContaI {
-
+public abstract class Conta implements ContaI {
+    public int id; // número da conta (usado apenas na conta corrente)
+    public double saldo = 0;
+    
     public Conta() {
         
     }
     
     @Override
     public boolean deposita(double valor) {
-        return valor > 0;
+        if (valor <= 0)
+            return false;
+        // show message in the screen
+        this.saldo += valor;
+        return true;
     }
 
     @Override
     public boolean saca(double valor) {
+        if (valor <= 0)
+            return false;
         // show message in the screen
-        return valor > 0;
+        this.saldo -= valor;
+        return true;
     }
 
     @Override
     public Cliente getDono() {
+        // get data from database (find client where account id equals this id)
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public int getNumero() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.id;
     }
 
     @Override
     public double getSaldo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void remunera() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.saldo;
     }
     
 }

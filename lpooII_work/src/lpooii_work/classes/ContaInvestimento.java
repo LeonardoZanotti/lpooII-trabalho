@@ -16,4 +16,27 @@ public class ContaInvestimento extends Conta {
         this.depositoMinimo = depositoMinimo;
         this.depositoInicial = depositoInicial;
     }
+
+    @Override
+    public boolean saca(double valor) {
+        if (this.saldo - valor < montanteMinimo) {
+            // saque inválido, mostrar na tela isso
+            return false;
+        }
+        return super.saca(valor);
+    }
+    
+    @Override
+    public boolean deposita(double valor) {
+        if (valor < this.depositoMinimo) {
+            // deposito inválido, mostrar na tela
+            return false;
+        }
+        return super.deposita(valor);
+    }
+
+    @Override
+    public void remunera() {
+        this.saldo = this.saldo * 1.02;
+    }
 }
