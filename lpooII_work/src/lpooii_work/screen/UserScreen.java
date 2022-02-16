@@ -4,6 +4,8 @@
  */
 package lpooii_work.screen;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,7 +22,9 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import lpooii_work.classes.Cliente;
 
@@ -35,6 +41,28 @@ public class UserScreen extends JFrame implements ActionListener {
     
     public UserScreen() {
         // replace with db data
+        clientes.add(c1);
+        clientes.add(c2);
+        clientes.add(c1);
+        clientes.add(c2);
+        clientes.add(c1);
+        clientes.add(c2);
+        clientes.add(c1);
+        clientes.add(c2);
+        clientes.add(c1);
+        clientes.add(c2);
+        clientes.add(c1);
+        clientes.add(c2);
+        clientes.add(c1);
+        clientes.add(c2);
+        clientes.add(c1);
+        clientes.add(c2);
+        clientes.add(c1);
+        clientes.add(c2);
+        clientes.add(c1);
+        clientes.add(c2);
+        clientes.add(c1);
+        clientes.add(c2);
         clientes.add(c1);
         clientes.add(c2);
         
@@ -97,24 +125,25 @@ public class UserScreen extends JFrame implements ActionListener {
     }
     
     public void changePanel(String panel) {
-        JPanel newPanel = new JPanel(new GridLayout(20, 20));
+        JPanel newPanel = new JPanel();
         newPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        
-        JButton voltarButton = new JButton("Voltar");
-        voltarButton.addActionListener(this);
-        voltarButton.setActionCommand("voltar");
-        newPanel.add(voltarButton);
 
         switch (panel) {
             case "clientes":
+                JPanel buttonsPanel = new JPanel(new GridLayout(2, 2, 165, 20));
+                JPanel clientesPanel = new JPanel();
+
+                JButton voltarButton = new JButton("Voltar");
                 JButton incluirButton = new JButton("Novo cliente");
                 JButton atualizarButton = new JButton("Atualizar cliente");
                 JButton excluirButton = new JButton("Remover cliente");
 
+                voltarButton.addActionListener(this);
                 incluirButton.addActionListener(this);
                 atualizarButton.addActionListener(this);
                 excluirButton.addActionListener(this);
 
+                voltarButton.setActionCommand("voltar");
                 incluirButton.setActionCommand("incluirCliente");
                 atualizarButton.setActionCommand("atualizarCliente");
                 excluirButton.setActionCommand("removerCliente");
@@ -122,11 +151,16 @@ public class UserScreen extends JFrame implements ActionListener {
                 List<String> clienteNomes = clientes.stream().map(cliente -> cliente.getFullName()).collect(Collectors.toList());
                 DefaultListModel model = new DefaultListModel();
                 model.addAll(clienteNomes);
-                JList clientesList = new JList(model);
                 
-                DefaultListModel model = new DefaultListModel();
-
-
+                JList<String> clientesList = new JList(model);
+                JScrollPane scrollPane = new JScrollPane();
+                scrollPane.setViewportView(clientesList);
+                clientesList.setCellRenderer(new DefaultListCellRenderer());
+        
+                clientesList.setFixedCellWidth(450);
+                clientesList.setFixedCellHeight(50);
+                clientesPanel.add(scrollPane);
+                
                 // limpar model
                 // model.clear();
                 // jList1.setModel(model);
@@ -135,13 +169,14 @@ public class UserScreen extends JFrame implements ActionListener {
                 // model.remove(jList1.getSelectedIndex()); //retorna a posição do item selecionado.
                 // jList1.setModel(model);
 
-                newPanel.add(incluirButton);
-                newPanel.add(atualizarButton);
-                newPanel.add(excluirButton);
-                newPanel.add(clientesList);
+                buttonsPanel.add(voltarButton);
+                buttonsPanel.add(incluirButton);
+                buttonsPanel.add(atualizarButton);
+                buttonsPanel.add(excluirButton);
+                
+                newPanel.add(buttonsPanel);
+                newPanel.add(clientesPanel);
                 break;
-
-
             case "vincular":
                 break;
             case "contas":
