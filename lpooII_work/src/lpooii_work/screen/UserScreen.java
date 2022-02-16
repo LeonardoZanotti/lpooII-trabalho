@@ -7,20 +7,37 @@ package lpooii_work.screen;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
+import lpooii_work.classes.Cliente;
 
 /**
  *
  * @author leonardozanotti
  */
 public class UserScreen extends JFrame implements ActionListener {
+    ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    
+    // replace with db data
+    Cliente c1 = new Cliente("Leonardo", "Zanotti", "123123456", "123456789", "endereço 1", 0);
+    Cliente c2 = new Cliente("Leonardo 2", "Zanotti 2", "46", "89", "endereço 2", 0);
     
     public UserScreen() {
+        // replace with db data
+        clientes.add(c1);
+        clientes.add(c2);
+        
         this.initialize();
     }
     
@@ -80,9 +97,14 @@ public class UserScreen extends JFrame implements ActionListener {
     }
     
     public void changePanel(String panel) {
-        JPanel newPanel = new JPanel();
+        JPanel newPanel = new JPanel(new GridLayout(20, 20));
         newPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         
+        JButton voltarButton = new JButton("Voltar");
+        voltarButton.addActionListener(this);
+        voltarButton.setActionCommand("voltar");
+        newPanel.add(voltarButton);
+
         switch (panel) {
             case "clientes":
                 JButton incluirButton = new JButton("Novo cliente");
@@ -97,10 +119,29 @@ public class UserScreen extends JFrame implements ActionListener {
                 atualizarButton.setActionCommand("atualizarCliente");
                 excluirButton.setActionCommand("removerCliente");
 
+                List<String> clienteNomes = clientes.stream().map(cliente -> cliente.getFullName()).collect(Collectors.toList());
+                DefaultListModel model = new DefaultListModel();
+                model.addAll(clienteNomes);
+                JList clientesList = new JList(model);
+                
+                DefaultListModel model = new DefaultListModel();
+
+
+                // limpar model
+                // model.clear();
+                // jList1.setModel(model);
+
+                // remover item
+                // model.remove(jList1.getSelectedIndex()); //retorna a posição do item selecionado.
+                // jList1.setModel(model);
+
                 newPanel.add(incluirButton);
                 newPanel.add(atualizarButton);
                 newPanel.add(excluirButton);
+                newPanel.add(clientesList);
                 break;
+
+
             case "vincular":
                 break;
             case "contas":

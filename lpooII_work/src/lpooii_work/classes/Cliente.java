@@ -20,4 +20,8 @@ public class Cliente {
         this.endereco = endereco;
         this.conta = conta;
     }
+    
+    public String getFullName() {
+        return this.nome + " " + this.sobrenome;
+    }
 }
