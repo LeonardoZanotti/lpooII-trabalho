@@ -8,7 +8,7 @@ package lpooii_work.classes;
  *
  * @author leonardozanotti
  */
-public class Cliente {
+public class Cliente implements Comparable {
     private String nome, sobrenome, rg, cpf, endereco;
     private int id, conta;
     
@@ -88,5 +88,11 @@ public class Cliente {
 
     public void setConta(int conta) {
         this.conta = conta;
+    }
+
+    @Override
+    public int compareTo(Object cliente) {
+        Cliente c = (Cliente) cliente;
+        return this.getFullName().compareTo(c.getFullName());
     }
 }

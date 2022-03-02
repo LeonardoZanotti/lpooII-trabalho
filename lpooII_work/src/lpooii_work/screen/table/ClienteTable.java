@@ -5,7 +5,9 @@
 package lpooii_work.screen.table;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.table.AbstractTableModel;
 import lpooii_work.classes.Cliente;
 
@@ -96,6 +98,7 @@ public class ClienteTable extends AbstractTableModel {
     public void addCliente(Cliente cliente) {
         this.clientes.add(cliente);
         this.fireTableRowsInserted(clientes.size() - 1, clientes.size() - 1);
+        Collections.sort(this.clientes);
     }
     
     public void updateCliente(Cliente cliente, String nome, String sobrenome, String rg, String cpf, String endereco) {
@@ -105,11 +108,13 @@ public class ClienteTable extends AbstractTableModel {
         this.setValueAt(rg, row, 2);
         this.setValueAt(cpf, row, 3);
         this.setValueAt(endereco, row, 4);
+        Collections.sort(this.clientes);
     }
 
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
         this.fireTableDataChanged();
+        Collections.sort(this.clientes);
     }
 
     public void cleanTable() {
@@ -122,5 +127,12 @@ public class ClienteTable extends AbstractTableModel {
 
     public Cliente getCliente(int linha){
         return clientes.get(linha);
+    }
+    
+    public void searchCliente(String search) {
+        List<Cliente> filteredClientes = this.clientes.stream()
+            .filter(cliente -> cliente.getFullName().contains(search) || cliente.getRg().contains(search) || cliente.getCpf().contains(search))
+            .collect(Collectors.toList());
+        this.setClientes(filteredClientes);
     }
 }

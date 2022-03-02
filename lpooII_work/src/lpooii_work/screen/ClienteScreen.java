@@ -50,6 +50,9 @@ public class ClienteScreen extends javax.swing.JFrame {
         EnderecoField = new javax.swing.JTextField();
         ScrollPane = new javax.swing.JScrollPane();
         clientesTable = new javax.swing.JTable();
+        PesquisarLabel = new javax.swing.JLabel();
+        SearchField = new javax.swing.JTextField();
+        PesquisarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +104,15 @@ public class ClienteScreen extends javax.swing.JFrame {
         });
         ScrollPane.setViewportView(clientesTable);
 
+        PesquisarLabel.setText("Pesquisar");
+
+        PesquisarButton.setText("Pesquisar");
+        PesquisarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PesquisarButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,14 +145,21 @@ public class ClienteScreen extends javax.swing.JFrame {
                                 .addComponent(AtualizarButton)
                                 .addGap(18, 18, 18)
                                 .addComponent(ExcluirButton))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(CPFLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CPFField, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(CPFLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CPFField, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(PesquisarLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(PesquisarButton)
+                                .addGap(1, 1, 1)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -172,9 +191,14 @@ public class ClienteScreen extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(EnderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EnderecoLabel))
-                .addGap(17, 17, 17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PesquisarLabel)
+                    .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PesquisarButton))
+                .addGap(18, 18, 18)
                 .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -231,6 +255,11 @@ public class ClienteScreen extends javax.swing.JFrame {
         this.EnderecoField.setText(clienteToUpdate.getEndereco());
     }//GEN-LAST:event_clientesTableMouseClicked
 
+    private void PesquisarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarButtonActionPerformed
+        String search = this.SearchField.getText();
+        clienteTableModel.searchCliente(search);
+    }//GEN-LAST:event_PesquisarButtonActionPerformed
+
     private void cleanFields(){
         this.NomeField.setText("");
         this.SobrenomeField.setText("");
@@ -285,9 +314,12 @@ public class ClienteScreen extends javax.swing.JFrame {
     private javax.swing.JButton ExcluirButton;
     private javax.swing.JTextField NomeField;
     private javax.swing.JLabel NomeLabel;
+    private javax.swing.JButton PesquisarButton;
+    private javax.swing.JLabel PesquisarLabel;
     private javax.swing.JTextField RGField;
     private javax.swing.JLabel RGLabel;
     private javax.swing.JScrollPane ScrollPane;
+    private javax.swing.JTextField SearchField;
     private javax.swing.JTextField SobrenomeField;
     private javax.swing.JLabel SobrenomeLabel;
     private javax.swing.JButton VoltarButton;
