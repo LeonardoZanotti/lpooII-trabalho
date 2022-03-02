@@ -4,12 +4,18 @@
  */
 package lpooii_work.screen;
 
+import lpooii_work.classes.Cliente;
+import lpooii_work.screen.table.ClienteTable;
+
 /**
  *
  * @author leonardozanotti
  */
 public class ClienteScreen extends javax.swing.JFrame {
-
+    private final ClienteTable clienteTableModel = new ClienteTable();
+    private int clickedLine = -1;
+    private Cliente clienteToUpdate;
+    
     /**
      * Creates new form Cliente
      */
@@ -28,8 +34,22 @@ public class ClienteScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         VoltarButton = new javax.swing.JButton();
+        CadastrarButton = new javax.swing.JButton();
+        AtualizarButton = new javax.swing.JButton();
+        ExcluirButton = new javax.swing.JButton();
+        NomeLabel = new javax.swing.JLabel();
+        SobrenomeLabel = new javax.swing.JLabel();
+        RGLabel = new javax.swing.JLabel();
+        CPFLabel = new javax.swing.JLabel();
+        EnderecoLabel = new javax.swing.JLabel();
+        NomeField = new javax.swing.JTextField();
+        SobrenomeField = new javax.swing.JTextField();
+        RGField = new javax.swing.JTextField();
+        CPFField = new javax.swing.JTextField();
+        EnderecoField = new javax.swing.JTextField();
+        ScrollPane = new javax.swing.JScrollPane();
+        clientesTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,32 +60,121 @@ public class ClienteScreen extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(VoltarButton)
-                .addContainerGap(311, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(VoltarButton)
-                .addContainerGap(263, Short.MAX_VALUE))
-        );
+        CadastrarButton.setText("Cadastrar");
+        CadastrarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadastrarButtonActionPerformed(evt);
+            }
+        });
+
+        AtualizarButton.setText("Atualizar");
+        AtualizarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AtualizarButtonActionPerformed(evt);
+            }
+        });
+
+        ExcluirButton.setText("Excluir");
+        ExcluirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExcluirButtonActionPerformed(evt);
+            }
+        });
+
+        NomeLabel.setText("Nome");
+
+        SobrenomeLabel.setText("Sobrenome");
+
+        RGLabel.setText("RG");
+
+        CPFLabel.setText("CPF");
+
+        EnderecoLabel.setText("Endereço");
+
+        RGField.setToolTipText("");
+
+        clientesTable.setModel(clienteTableModel);
+        clientesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clientesTableMouseClicked(evt);
+            }
+        });
+        ScrollPane.setViewportView(clientesTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(RGLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RGField, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(EnderecoLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(EnderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(NomeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(NomeField, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SobrenomeLabel)
+                            .addComponent(VoltarButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SobrenomeField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(CadastrarButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(AtualizarButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(ExcluirButton))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(CPFLabel)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CPFField, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(VoltarButton)
+                    .addComponent(AtualizarButton)
+                    .addComponent(CadastrarButton)
+                    .addComponent(ExcluirButton))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NomeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NomeLabel))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SobrenomeLabel)
+                    .addComponent(SobrenomeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RGLabel)
+                    .addComponent(RGField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CPFLabel)
+                    .addComponent(CPFField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(EnderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EnderecoLabel))
+                .addGap(17, 17, 17)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -78,6 +187,58 @@ public class ClienteScreen extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_VoltarButtonActionPerformed
 
+    private void CadastrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarButtonActionPerformed
+        String nome = this.NomeField.getText();
+        String sobrenome = this.SobrenomeField.getText();
+        String rg = this.RGField.getText();
+        String cpf = this.CPFField.getText();
+        String endereco = this.EnderecoField.getText();
+        if (nome.length() > 0 && sobrenome.length() > 0 && rg.length() > 0 && cpf.length() > 0 && endereco.length() > 0) {
+            Cliente c = new Cliente(nome, sobrenome, rg, cpf, endereco);
+            this.clienteTableModel.addCliente(c);
+            cleanFields();
+        }
+    }//GEN-LAST:event_CadastrarButtonActionPerformed
+
+    private void AtualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarButtonActionPerformed
+        String nome = this.NomeField.getText();
+        String sobrenome = this.SobrenomeField.getText();
+        String rg = this.RGField.getText();
+        String cpf = this.CPFField.getText();
+        String endereco = this.EnderecoField.getText();
+        if (nome.length() > 0 && sobrenome.length() > 0 && rg.length() > 0 && cpf.length() > 0 && endereco.length() > 0) {
+            this.clienteTableModel.updateCliente(clienteToUpdate, nome, sobrenome, rg, cpf, endereco);
+            cleanFields();
+        }
+    }//GEN-LAST:event_AtualizarButtonActionPerformed
+
+    private void ExcluirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirButtonActionPerformed
+        if (clickedLine != -1) {
+            Cliente c = clienteTableModel.getCliente(clickedLine);
+            clienteTableModel.removeCliente(c);
+        }
+        clickedLine = -1;
+        cleanFields();
+    }//GEN-LAST:event_ExcluirButtonActionPerformed
+
+    private void clientesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientesTableMouseClicked
+        clickedLine = clientesTable.rowAtPoint(evt.getPoint());
+        clienteToUpdate = clienteTableModel.getCliente(clickedLine);
+        this.NomeField.setText(clienteToUpdate.getNome());
+        this.SobrenomeField.setText(clienteToUpdate.getSobrenome());
+        this.RGField.setText(clienteToUpdate.getRg());
+        this.CPFField.setText(clienteToUpdate.getCpf());
+        this.EnderecoField.setText(clienteToUpdate.getEndereco());
+    }//GEN-LAST:event_clientesTableMouseClicked
+
+    private void cleanFields(){
+        this.NomeField.setText("");
+        this.SobrenomeField.setText("");
+        this.RGField.setText("");
+        this.CPFField.setText("");
+        this.EnderecoField.setText("");       
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -115,7 +276,21 @@ public class ClienteScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AtualizarButton;
+    private javax.swing.JTextField CPFField;
+    private javax.swing.JLabel CPFLabel;
+    private javax.swing.JButton CadastrarButton;
+    private javax.swing.JTextField EnderecoField;
+    private javax.swing.JLabel EnderecoLabel;
+    private javax.swing.JButton ExcluirButton;
+    private javax.swing.JTextField NomeField;
+    private javax.swing.JLabel NomeLabel;
+    private javax.swing.JTextField RGField;
+    private javax.swing.JLabel RGLabel;
+    private javax.swing.JScrollPane ScrollPane;
+    private javax.swing.JTextField SobrenomeField;
+    private javax.swing.JLabel SobrenomeLabel;
     private javax.swing.JButton VoltarButton;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTable clientesTable;
     // End of variables declaration//GEN-END:variables
 }
