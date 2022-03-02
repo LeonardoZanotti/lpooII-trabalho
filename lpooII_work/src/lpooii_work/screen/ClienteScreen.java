@@ -4,6 +4,7 @@
  */
 package lpooii_work.screen;
 
+import javax.swing.JOptionPane;
 import lpooii_work.classes.Cliente;
 import lpooii_work.screen.table.ClienteTable;
 
@@ -237,12 +238,12 @@ public class ClienteScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_AtualizarButtonActionPerformed
 
     private void ExcluirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirButtonActionPerformed
-        if (clickedLine != -1) {
+        if (clickedLine != -1 && JOptionPane.showConfirmDialog(null, "Você tem certeza?") == 0) {
             Cliente c = clienteTableModel.getCliente(clickedLine);
             clienteTableModel.removeCliente(c);
+            clickedLine = -1;
+            cleanFields();  
         }
-        clickedLine = -1;
-        cleanFields();
     }//GEN-LAST:event_ExcluirButtonActionPerformed
 
     private void clientesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientesTableMouseClicked
