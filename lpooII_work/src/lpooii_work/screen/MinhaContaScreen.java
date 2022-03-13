@@ -4,11 +4,18 @@
  */
 package lpooii_work.screen;
 
+import javax.swing.JOptionPane;
+import lpooii_work.classes.Cliente;
+import lpooii_work.screen.table.ClienteTable;
+
 /**
  *
  * @author leonardozanotti
  */
 public class MinhaContaScreen extends javax.swing.JFrame {
+    private final ClienteTable clienteTableModel = new ClienteTable();
+    private int clickedLine = -1;
+    private Cliente clienteToAction;
 
     /**
      * Creates new form MinhaConta
@@ -17,6 +24,11 @@ public class MinhaContaScreen extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Minha conta");
+        
+        Cliente c1 = new Cliente("nome 1", "sobrenome 1", "123456789", "23456", "endereco 1");
+        Cliente c2 = new Cliente("nome 2", "sobrenome 2", "987654", "4444", "endereco 2");
+        this.clienteTableModel.addCliente(c1);
+        this.clienteTableModel.addCliente(c2);
     }
 
     /**
@@ -30,6 +42,15 @@ public class MinhaContaScreen extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         VoltarButton = new javax.swing.JButton();
+        ScrollPane = new javax.swing.JScrollPane();
+        clientesTable = new javax.swing.JTable();
+        SaqueButton = new javax.swing.JButton();
+        DepositoButton = new javax.swing.JButton();
+        SaldoButton = new javax.swing.JButton();
+        RemunerarButton = new javax.swing.JButton();
+        PesquisarLabel = new javax.swing.JLabel();
+        SearchField = new javax.swing.JTextField();
+        PesquisarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,21 +61,98 @@ public class MinhaContaScreen extends javax.swing.JFrame {
             }
         });
 
+        clientesTable.setModel(clienteTableModel);
+        clientesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clientesTableMouseClicked(evt);
+            }
+        });
+        ScrollPane.setViewportView(clientesTable);
+
+        SaqueButton.setText("Saque");
+        SaqueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaqueButtonActionPerformed(evt);
+            }
+        });
+
+        DepositoButton.setText("Depósito");
+        DepositoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DepositoButtonActionPerformed(evt);
+            }
+        });
+
+        SaldoButton.setText("Saldo");
+        SaldoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaldoButtonActionPerformed(evt);
+            }
+        });
+
+        RemunerarButton.setText("Remunerar");
+        RemunerarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemunerarButtonActionPerformed(evt);
+            }
+        });
+
+        PesquisarLabel.setText("Pesquisar");
+
+        PesquisarButton.setText("Pesquisar");
+        PesquisarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PesquisarButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(VoltarButton)
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ScrollPane)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(PesquisarLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(PesquisarButton))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(VoltarButton)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(SaqueButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(DepositoButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(RemunerarButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(SaldoButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(VoltarButton)
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PesquisarLabel)
+                    .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PesquisarButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SaqueButton)
+                    .addComponent(DepositoButton)
+                    .addComponent(RemunerarButton)
+                    .addComponent(SaldoButton))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -77,6 +175,41 @@ public class MinhaContaScreen extends javax.swing.JFrame {
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_VoltarButtonActionPerformed
+
+    private void clientesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientesTableMouseClicked
+        clickedLine = clientesTable.rowAtPoint(evt.getPoint());
+        clienteToAction = clienteTableModel.getCliente(clickedLine);
+    }//GEN-LAST:event_clientesTableMouseClicked
+
+    private void PesquisarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarButtonActionPerformed
+        String search = this.SearchField.getText();
+        clienteTableModel.searchCliente(search);
+    }//GEN-LAST:event_PesquisarButtonActionPerformed
+
+    private void SaqueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaqueButtonActionPerformed
+        String saqueString = JOptionPane.showInputDialog("Quanto quer sacar?");
+        if (saqueString != null) {
+            double saqueDouble = Double.parseDouble(saqueString);
+            JOptionPane.showMessageDialog(null, "Saque de R$" + saqueString + " efetuado com sucesso!", "Saque", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_SaqueButtonActionPerformed
+
+    private void DepositoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepositoButtonActionPerformed
+        String depositoString = JOptionPane.showInputDialog("Quanto quer depositar?");
+        if (depositoString != null) {
+            double depositoDouble = Double.parseDouble(depositoString);
+            JOptionPane.showMessageDialog(null, "Depósito de R$" + depositoString + " efetuado com sucesso!", "Depósito", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_DepositoButtonActionPerformed
+
+    private void RemunerarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemunerarButtonActionPerformed
+        JOptionPane.showMessageDialog(null, "Conta remunerada com sucesso!", "Remunerar", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_RemunerarButtonActionPerformed
+
+    private void SaldoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaldoButtonActionPerformed
+        double saldo = 10.00;
+        JOptionPane.showMessageDialog(null, "Seu saldo é de R$" + saldo, "Saldo", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_SaldoButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,7 +248,16 @@ public class MinhaContaScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton DepositoButton;
+    private javax.swing.JButton PesquisarButton;
+    private javax.swing.JLabel PesquisarLabel;
+    private javax.swing.JButton RemunerarButton;
+    private javax.swing.JButton SaldoButton;
+    private javax.swing.JButton SaqueButton;
+    private javax.swing.JScrollPane ScrollPane;
+    private javax.swing.JTextField SearchField;
     private javax.swing.JButton VoltarButton;
+    private javax.swing.JTable clientesTable;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

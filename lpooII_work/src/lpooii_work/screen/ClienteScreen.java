@@ -238,7 +238,7 @@ public class ClienteScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_AtualizarButtonActionPerformed
 
     private void ExcluirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirButtonActionPerformed
-        if (clickedLine != -1 && JOptionPane.showConfirmDialog(null, "Você tem certeza?") == 0) {
+        if (clickedLine != -1 && JOptionPane.showConfirmDialog(null, "Você tem certeza? Todas contas deste cliente serão apagadas!") == 0) {
             Cliente c = clienteTableModel.getCliente(clickedLine);
             clienteTableModel.removeCliente(c);
             clickedLine = -1;
