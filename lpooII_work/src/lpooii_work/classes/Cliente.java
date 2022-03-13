@@ -90,6 +90,11 @@ public class Cliente implements Comparable {
         this.conta = conta;
     }
 
+    public static Conta getContaByCPF(String cpf) {
+        // get data from database (find client where account cpf equals this cpf)
+        return null;
+    }
+
     @Override
     public int compareTo(Object cliente) {
         Cliente c = (Cliente) cliente;
