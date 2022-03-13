@@ -29,6 +29,11 @@ public class MinhaContaScreen extends javax.swing.JFrame {
         Cliente c2 = new Cliente("nome 2", "sobrenome 2", "987654", "4444", "endereco 2");
         this.clienteTableModel.addCliente(c1);
         this.clienteTableModel.addCliente(c2);
+        
+        SaqueButton.setEnabled(false);
+        DepositoButton.setEnabled(false);
+        SaldoButton.setEnabled(false);
+        RemunerarButton.setEnabled(false);
     }
 
     /**
@@ -179,6 +184,10 @@ public class MinhaContaScreen extends javax.swing.JFrame {
     private void clientesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientesTableMouseClicked
         clickedLine = clientesTable.rowAtPoint(evt.getPoint());
         clienteToAction = clienteTableModel.getCliente(clickedLine);
+        SaqueButton.setEnabled(true);
+        DepositoButton.setEnabled(true);
+        SaldoButton.setEnabled(true);
+        RemunerarButton.setEnabled(true);
     }//GEN-LAST:event_clientesTableMouseClicked
 
     private void PesquisarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarButtonActionPerformed
