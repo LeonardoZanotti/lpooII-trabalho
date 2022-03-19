@@ -158,7 +158,7 @@ public class MinhaContaScreen extends javax.swing.JFrame {
 
     private void PesquisarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarButtonActionPerformed
         String search = this.SearchField.getText();
-        clienteConta = Cliente.getContaByCPF(search);
+//        clienteConta = ClienteDAO.getContaByCPF(search);
         if (clienteConta != null || 1 == 1) {
             SaqueButton.setEnabled(true);
             DepositoButton.setEnabled(true);
