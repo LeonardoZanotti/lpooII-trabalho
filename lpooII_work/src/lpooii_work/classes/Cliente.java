@@ -30,6 +30,16 @@ public class Cliente implements Comparable {
         this.conta = conta;
     }
     
+    public Cliente(int id, String nome, String sobrenome, String rg, String cpf, String endereco, int conta) {
+        this.id = id;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.conta = conta;
+    }
+    
     public String getFullName() {
         return this.nome + " " + this.sobrenome;
     }
