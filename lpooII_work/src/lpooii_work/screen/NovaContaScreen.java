@@ -235,12 +235,12 @@ public class NovaContaScreen extends javax.swing.JFrame {
         if (selectedConta.equals("Conta corrente")) {
             double depositoInicial = Double.parseDouble(input1);
             double limite = Double.parseDouble(input2);
-            conta = (ContaCorrente) new ContaCorrente(depositoInicial, limite);
+            conta = (ContaCorrente) new ContaCorrente(0.0, depositoInicial, limite);
         } else {
             double montanteMinimo = Double.parseDouble(input1);
             double depositoMinimo = Double.parseDouble(input2);
             double depositoInicial = Double.parseDouble(input3);
-            conta = (ContaInvestimento) new ContaInvestimento(montanteMinimo, depositoMinimo, depositoInicial);
+            conta = (ContaInvestimento) new ContaInvestimento(0.0, montanteMinimo, depositoMinimo, depositoInicial);
         }
         
         // salvar conta no banco e atrelar id ao cliente

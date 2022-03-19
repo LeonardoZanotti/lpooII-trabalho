@@ -9,9 +9,15 @@ package lpooii_work.classes;
  * @author leonardozanotti
  */
 public class ContaCorrente extends Conta {
-    private double depositoInicial, limite;
+    public ContaCorrente(double saldo, double depositoInicial, double limite) {
+        this.saldo = saldo;
+        this.depositoInicial = depositoInicial;
+        this.limite = limite;
+    }
     
-    public ContaCorrente(double depositoInicial, double limite) {
+    public ContaCorrente(int id, double saldo, double depositoInicial, double limite) {
+        this.id = id;
+        this.saldo = saldo;
         this.depositoInicial = depositoInicial;
         this.limite = limite;
     }

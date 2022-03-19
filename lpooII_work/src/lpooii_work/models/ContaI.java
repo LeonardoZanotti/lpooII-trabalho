@@ -16,6 +16,7 @@ public interface ContaI {
     public boolean saca(double valor);
     public Cliente getDono();
     public int getNumero();
+    public int getTipo();
     public double getSaldo();
     public void remunera();
 }

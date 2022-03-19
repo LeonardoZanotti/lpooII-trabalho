@@ -11,9 +11,9 @@ import lpooii_work.models.ContaI;
  * @author leonardozanotti
  */
 public abstract class Conta implements ContaI {
-    public int id; // número da conta (usado apenas na conta corrente)
-    public double saldo = 0;
-    
+    public int id, tipo;
+    public double saldo = 0, depositoInicial, limite, montanteMinimo, depositoMinimo;
+
     public Conta() {
         
     }
@@ -46,10 +46,55 @@ public abstract class Conta implements ContaI {
     public int getNumero() {
         return this.id;
     }
+    
+    @Override
+    public int getTipo() {
+        return this.tipo;
+    }
 
     @Override
     public double getSaldo() {
         return this.saldo;
     }
     
+     public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getDepositoInicial() {
+        return depositoInicial;
+    }
+
+    public void setDepositoInicial(double depositoInicial) {
+        this.depositoInicial = depositoInicial;
+    }
+
+    public double getLimite() {
+        return limite;
+    }
+
+    public void setLimite(double limite) {
+        this.limite = limite;
+    }
+
+    public double getMontanteMinimo() {
+        return montanteMinimo;
+    }
+
+    public void setMontanteMinimo(double montanteMinimo) {
+        this.montanteMinimo = montanteMinimo;
+    }
+
+    public double getDepositoMinimo() {
+        return depositoMinimo;
+    }
+
+    public void setDepositoMinimo(double depositoMinimo) {
+        this.depositoMinimo = depositoMinimo;
+    }
+
 }

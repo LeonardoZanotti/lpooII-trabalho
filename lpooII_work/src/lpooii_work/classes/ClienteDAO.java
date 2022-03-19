@@ -12,7 +12,6 @@ package lpooii_work.classes;
 import lpooii_work.database.DAO;
 import lpooii_work.database.DAOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
