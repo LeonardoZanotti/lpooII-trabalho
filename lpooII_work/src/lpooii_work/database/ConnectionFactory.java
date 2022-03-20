@@ -4,36 +4,40 @@
  */
 package lpooii_work.database;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  *
  * @author leonardozanotti
  */
 public class ConnectionFactory implements AutoCloseable {
-    // --- MUDAR ESTAS VARIÁVEIS CONFORME SUAS CONFIGURAÇÕES ---
-    private static String DATABASE = "lpooii";              // nome do banco de dados
-    private static String LOGIN = "leonardozanotti";        // login do postgres
-    private static String SENHA = "leo123";                 // senha do postgres
-    
-    private static String DRIVER = "org.postgresql.Driver";
-    private static String URL = String.join(" ", "jdbc:postgresql://localhost:5432/", ConnectionFactory.DATABASE);
-    
+    private static String DRIVER, URL, DATABASE, USER, PASSWORD;
     private Connection con = null;
     
-    public Connection getConnection() throws DAOException {
+    public Connection getConnection() throws DAOException, FileNotFoundException, IOException {
         if (this.con == null) {
             try {
-                Class.forName(this.DRIVER);
-                this.con = DriverManager.getConnection(this.URL, this.LOGIN, this.SENHA);
+                Properties prop = new Properties();
+                prop.load(getClass().getResourceAsStream("./database.properties"));
+                ConnectionFactory.DRIVER = prop.getProperty("db.driver");
+                ConnectionFactory.URL = prop.getProperty("db.url");
+                ConnectionFactory.DATABASE = prop.getProperty("db.database");
+                ConnectionFactory.USER = prop.getProperty("db.user");
+                ConnectionFactory.PASSWORD = prop.getProperty("db.password");
+                Class.forName(ConnectionFactory.DRIVER);
+                this.con = DriverManager.getConnection(ConnectionFactory.URL + ConnectionFactory.DATABASE, ConnectionFactory.USER, ConnectionFactory.PASSWORD);
+                System.out.println("Connection established!");
             }
             catch (ClassNotFoundException e) {
-                throw new DAOException("Driver do banco não encontrado: " + this.DRIVER, e);
+                throw new DAOException("Driver do banco não encontrado: " + ConnectionFactory.DRIVER, e);
             }
             catch (SQLException e) {
-                throw new DAOException("Erro conectando ao banco de dados: " + this.URL + "/" + this.LOGIN + "/" + this.SENHA, e);
+                throw new DAOException("Erro conectando ao banco de dados: " + ConnectionFactory.URL + "/" + ConnectionFactory.USER + "/" + ConnectionFactory.PASSWORD, e);
             }
         }
         return this.con;
@@ -45,6 +49,7 @@ public class ConnectionFactory implements AutoCloseable {
             try {
                 this.con.close();
                 this.con = null;
+                System.out.println("Connection closed!");
             }
             catch (Exception e) {
                 System.out.println("Erro fechando a conexão.");
