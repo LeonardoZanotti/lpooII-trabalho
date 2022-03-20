@@ -39,29 +39,30 @@ public class ClienteDAO implements DAO<Cliente> {
     
     @Override
     public Cliente buscar(long id) throws DAOException {
-        try (PreparedStatement st = con.prepareStatement(this.QUERY_BUSCAR)) {
+        try (PreparedStatement st = con.prepareStatement(ClienteDAO.QUERY_BUSCAR)) {
             st.setLong(1, id);
-            ResultSet rs = st.executeQuery();
-            if (rs.next())
-                return new Cliente(
-                    rs.getInt("id_cliente"),
-                    rs.getString("nome_cliente"),
-                    rs.getString("sobrenome_cliente"),
-                    rs.getString("rg_cliente"),
-                    rs.getString("cpf_cliente"),
-                    rs.getString("endereco_cliente"),
-                    rs.getInt("conta_cliente")
-                );
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next())
+                    return new Cliente(
+                            rs.getInt("id_cliente"),
+                            rs.getString("nome_cliente"),
+                            rs.getString("sobrenome_cliente"),
+                            rs.getString("rg_cliente"),
+                            rs.getString("cpf_cliente"),
+                            rs.getString("endereco_cliente"),
+                            rs.getInt("conta_cliente")
+                    );
+            }
             return null;
         } catch (SQLException e) {
-            throw new DAOException("Erro buscando cliente: " + this.QUERY_BUSCAR, e);
+            throw new DAOException("Erro buscando cliente: " + ClienteDAO.QUERY_BUSCAR, e);
         }
     }
 
     @Override
     public List<Cliente> buscarTodos() throws DAOException {
         List<Cliente> clientes = new ArrayList<>();
-        try (PreparedStatement st = this.con.prepareStatement(this.QUERY_BUSCAR_TODOS); ResultSet rs = st.executeQuery()) {
+        try (PreparedStatement st = this.con.prepareStatement(ClienteDAO.QUERY_BUSCAR_TODOS); ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
                 Cliente client = new Cliente(
                     rs.getInt("id_cliente"),
@@ -76,13 +77,13 @@ public class ClienteDAO implements DAO<Cliente> {
             }
             return clientes;
         } catch (SQLException e) {
-            throw new DAOException("Erro buscando todos os clientes: " + this.QUERY_BUSCAR_TODOS, e);
+            throw new DAOException("Erro buscando todos os clientes: " + ClienteDAO.QUERY_BUSCAR_TODOS, e);
         }
     }
 
     @Override
     public void inserir(Cliente c) throws DAOException {
-        try (PreparedStatement st = con.prepareStatement(this.QUERY_INSERIR)) {
+        try (PreparedStatement st = con.prepareStatement(ClienteDAO.QUERY_INSERIR)) {
             st.setString(1, c.getNome());
             st.setString(2, c.getSobrenome());
             st.setString(3, c.getRg());
@@ -91,13 +92,13 @@ public class ClienteDAO implements DAO<Cliente> {
             st.setInt(6, c.getConta());
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Erro inserindo cliente: " + this.QUERY_INSERIR + "/ " + c.toString(), e);
+            throw new DAOException("Erro inserindo cliente: " + ClienteDAO.QUERY_INSERIR + "/ " + c.toString(), e);
         }
     }
 
     @Override
     public void atualizar(Cliente c) throws DAOException {
-        try (PreparedStatement st = con.prepareStatement(this.QUERY_ALTERAR)) {
+        try (PreparedStatement st = con.prepareStatement(ClienteDAO.QUERY_ALTERAR)) {
             st.setString(1, c.getNome());
             st.setString(2, c.getSobrenome());
             st.setString(3, c.getRg());
@@ -106,18 +107,18 @@ public class ClienteDAO implements DAO<Cliente> {
             st.setInt(6, c.getConta());
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Erro atualizando cliente: " + this.QUERY_ALTERAR + "/ " + c.toString(), e);
+            throw new DAOException("Erro atualizando cliente: " + ClienteDAO.QUERY_ALTERAR + "/ " + c.toString(), e);
         }
     }
 
     @Override
     public void remover(long id) throws DAOException {
-        try (PreparedStatement st = con.prepareStatement(this.QUERY_REMOVER)) {
+        try (PreparedStatement st = con.prepareStatement(ClienteDAO.QUERY_REMOVER)) {
             Cliente c = this.buscar(id);
             st.setInt(1, c.getId());
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Erro removendo cliente: " + this.QUERY_REMOVER + "/ id=" + id, e);
+            throw new DAOException("Erro removendo cliente: " + ClienteDAO.QUERY_REMOVER + "/ id=" + id, e);
         }
     }
 }
