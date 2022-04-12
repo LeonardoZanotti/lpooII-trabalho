@@ -5,6 +5,7 @@
 package lpooii_work.view;
 
 import javax.swing.JOptionPane;
+import lpooii_work.controller.ClienteController;
 import lpooii_work.models.Cliente;
 import lpooii_work.view.table.ClienteTable;
 
@@ -16,7 +17,6 @@ public class ClienteScreen extends javax.swing.JFrame {
     private final ClienteTable clienteTableModel = new ClienteTable();
     private int clickedLine = -1;
     private Cliente clienteToUpdate;
-    
     /**
      * Creates new form Cliente
      */
@@ -24,6 +24,7 @@ public class ClienteScreen extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Cliente");
+        clienteTableModel.setClientes(ClienteController.buscarTodos());
     }
 
     /**
@@ -220,7 +221,7 @@ public class ClienteScreen extends javax.swing.JFrame {
         String endereco = this.EnderecoField.getText();
         if (nome.length() > 0 && sobrenome.length() > 0 && rg.length() > 0 && cpf.length() > 0 && endereco.length() > 0) {
             Cliente c = new Cliente(nome, sobrenome, rg, cpf, endereco);
-            this.clienteTableModel.addCliente(c);
+            ClienteController.inserir(c);
             cleanFields();
         }
     }//GEN-LAST:event_CadastrarButtonActionPerformed
@@ -232,15 +233,15 @@ public class ClienteScreen extends javax.swing.JFrame {
         String cpf = this.CPFField.getText();
         String endereco = this.EnderecoField.getText();
         if (nome.length() > 0 && sobrenome.length() > 0 && rg.length() > 0 && cpf.length() > 0 && endereco.length() > 0) {
-            this.clienteTableModel.updateCliente(clienteToUpdate, nome, sobrenome, rg, cpf, endereco);
+            Cliente updatedCliente = new Cliente(nome, sobrenome, rg, cpf, endereco);
+            ClienteController.atualizar(clienteToUpdate, updatedCliente);
             cleanFields();
         }
     }//GEN-LAST:event_AtualizarButtonActionPerformed
 
     private void ExcluirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirButtonActionPerformed
         if (clickedLine != -1 && JOptionPane.showConfirmDialog(null, "Você tem certeza? Todas contas deste cliente serão apagadas!") == 0) {
-            Cliente c = clienteTableModel.getCliente(clickedLine);
-            clienteTableModel.removeCliente(c);
+            ClienteController.remover(clienteToUpdate);
             clickedLine = -1;
             cleanFields();  
         }
@@ -258,10 +259,12 @@ public class ClienteScreen extends javax.swing.JFrame {
 
     private void PesquisarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarButtonActionPerformed
         String search = this.SearchField.getText();
-        clienteTableModel.searchCliente(search);
+        if (search.length() == 0) cleanFields();
+        else clienteTableModel.searchCliente(search);
     }//GEN-LAST:event_PesquisarButtonActionPerformed
 
     private void cleanFields(){
+        clienteTableModel.setClientes(ClienteController.buscarTodos());
         this.NomeField.setText("");
         this.SobrenomeField.setText("");
         this.RGField.setText("");
