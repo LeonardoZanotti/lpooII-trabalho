@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package lpooii_work.screen;
+package lpooii_work.view;
 
 import javax.swing.JOptionPane;
-import lpooii_work.classes.Cliente;
-import lpooii_work.classes.Conta;
-import lpooii_work.classes.ContaCorrente;
-import lpooii_work.classes.ContaInvestimento;
-import lpooii_work.screen.table.ClienteTable;
+import lpooii_work.models.Cliente;
+import lpooii_work.models.Conta;
+import lpooii_work.models.ContaCorrente;
+import lpooii_work.models.ContaInvestimento;
+import lpooii_work.view.table.ClienteTable;
 
 /**
  *

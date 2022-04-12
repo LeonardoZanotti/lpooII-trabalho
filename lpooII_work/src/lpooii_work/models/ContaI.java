@@ -4,9 +4,6 @@
  */
 package lpooii_work.models;
 
-import lpooii_work.classes.Cliente;
-import lpooii_work.classes.Conta;
-
 /**
  *
  * @author leonardozanotti
