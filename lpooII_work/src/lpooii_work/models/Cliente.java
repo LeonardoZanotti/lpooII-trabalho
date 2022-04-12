@@ -105,4 +105,9 @@ public class Cliente implements Comparable {
         Cliente c = (Cliente) cliente;
         return this.getFullName().compareTo(c.getFullName());
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "nome=" + nome + ", sobrenome=" + sobrenome + ", rg=" + rg + ", cpf=" + cpf + ", endereco=" + endereco + ", id=" + id + ", conta=" + conta + '}';
+    }
 }

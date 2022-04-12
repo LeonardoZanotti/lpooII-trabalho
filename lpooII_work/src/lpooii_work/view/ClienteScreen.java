@@ -4,8 +4,13 @@
  */
 package lpooii_work.view;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import lpooii_work.controller.ClienteController;
+import lpooii_work.database.DAOException;
 import lpooii_work.models.Cliente;
 import lpooii_work.view.table.ClienteTable;
 
@@ -24,7 +29,11 @@ public class ClienteScreen extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Cliente");
-        clienteTableModel.setClientes(ClienteController.buscarTodos());
+        try {
+            clienteTableModel.setClientes(ClienteController.buscarTodos());
+        } catch (DAOException | IOException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -221,7 +230,11 @@ public class ClienteScreen extends javax.swing.JFrame {
         String endereco = this.EnderecoField.getText();
         if (nome.length() > 0 && sobrenome.length() > 0 && rg.length() > 0 && cpf.length() > 0 && endereco.length() > 0) {
             Cliente c = new Cliente(nome, sobrenome, rg, cpf, endereco);
-            ClienteController.inserir(c);
+            try {
+                ClienteController.inserir(c);
+            } catch (DAOException | IOException | SQLException e) {
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
             cleanFields();
         }
     }//GEN-LAST:event_CadastrarButtonActionPerformed
@@ -233,15 +246,23 @@ public class ClienteScreen extends javax.swing.JFrame {
         String cpf = this.CPFField.getText();
         String endereco = this.EnderecoField.getText();
         if (nome.length() > 0 && sobrenome.length() > 0 && rg.length() > 0 && cpf.length() > 0 && endereco.length() > 0) {
-            Cliente updatedCliente = new Cliente(nome, sobrenome, rg, cpf, endereco);
-            ClienteController.atualizar(clienteToUpdate, updatedCliente);
+            Cliente updatedCliente = new Cliente(clienteToUpdate.getId(), nome, sobrenome, rg, cpf, endereco, clienteToUpdate.getConta());
+            try {
+                ClienteController.atualizar(updatedCliente);
+            } catch (DAOException | IOException | SQLException e) {
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
             cleanFields();
         }
     }//GEN-LAST:event_AtualizarButtonActionPerformed
 
     private void ExcluirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirButtonActionPerformed
         if (clickedLine != -1 && JOptionPane.showConfirmDialog(null, "Você tem certeza? Todas contas deste cliente serão apagadas!") == 0) {
-            ClienteController.remover(clienteToUpdate);
+            try {
+                ClienteController.remover(clienteToUpdate);
+            } catch (DAOException | IOException | SQLException e) {
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
             clickedLine = -1;
             cleanFields();  
         }
@@ -264,7 +285,11 @@ public class ClienteScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_PesquisarButtonActionPerformed
 
     private void cleanFields(){
-        clienteTableModel.setClientes(ClienteController.buscarTodos());
+        try {
+            clienteTableModel.setClientes(ClienteController.buscarTodos());
+        } catch (DAOException | IOException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
         this.NomeField.setText("");
         this.SobrenomeField.setText("");
         this.RGField.setText("");
