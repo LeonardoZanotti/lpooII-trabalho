@@ -26,7 +26,7 @@ import lpooii_work.models.Cliente;
 public class ClienteDAO implements DAO<Cliente> {
     private static final String QUERY_INSERIR = "INSERT INTO tb_cliente (nome_cliente, sobrenome_cliente, rg_cliente, cpf_cliente, endereco_cliente) VALUES (?, ?, ?, ?, ?)";
     private static final String QUERY_BUSCAR = "SELECT * FROM tb_cliente WHERE id_cliente = (?)";
-    private static final String QUERY_SEARCH = "SELECT * FROM tb_cliente WHERE nome_cliente LIKE '%(?)%' OR sobrenome_cliente LIKE '%(?)%' OR rg_cliente LIKE '%(?)%' OR cpf_cliente LIKE '%(?)%'";
+    private static final String QUERY_SEARCH = "SELECT * FROM tb_cliente WHERE nome_cliente LIKE CONCAT('%',?,'%') OR sobrenome_cliente LIKE CONCAT('%',?,'%') OR rg_cliente LIKE CONCAT('%',?,'%') OR cpf_cliente LIKE CONCAT('%',?,'%')";
     private static final String QUERY_SEARCH_CPF_ONLY = "SELECT * FROM tb_cliente WHERE cpf_cliente = (?)";
     private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM tb_cliente";
     private static final String QUERY_ALTERAR = "UPDATE tb_cliente SET nome_cliente = (?), sobrenome_cliente = (?), rg_cliente = (?), cpf_cliente = (?), endereco_cliente = (?) WHERE id_cliente = (?)";
@@ -166,6 +166,33 @@ public class ClienteDAO implements DAO<Cliente> {
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro removendo cliente: " + ClienteDAO.QUERY_REMOVER + "/ id=" + id, e);
+        }
+    }
+
+    public List<Cliente> searchClients(String search) throws DAOException {
+        List<Cliente> clientes = new ArrayList<>();
+        try (PreparedStatement st = this.con.prepareStatement(ClienteDAO.QUERY_SEARCH)) {
+            st.setString(1, search);
+            st.setString(2, search);
+            st.setString(3, search);
+            st.setString(4, search);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    Cliente client = new Cliente(
+                        rs.getInt("id_cliente"),
+                        rs.getString("nome_cliente"),
+                        rs.getString("sobrenome_cliente"),
+                        rs.getString("rg_cliente"),
+                        rs.getString("cpf_cliente"),
+                        rs.getString("endereco_cliente")
+                    );
+                    clientes.add(client);
+                }
+            }
+            return clientes;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DAOException("Erro procurando clientes: " + ClienteDAO.QUERY_SEARCH, e);
         }
     }
 }

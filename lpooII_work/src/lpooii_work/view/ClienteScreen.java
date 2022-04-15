@@ -6,6 +6,8 @@ package lpooii_work.view;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import lpooii_work.controller.ClienteController;
 import lpooii_work.database.DAOException;
@@ -278,9 +280,12 @@ public class ClienteScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesTableMouseClicked
 
     private void PesquisarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarButtonActionPerformed
-        String search = this.SearchField.getText();
-        if (search.length() == 0) cleanFields();
-        else clienteTableModel.searchCliente(search);
+        try {
+            String search = this.SearchField.getText();
+            clienteTableModel.setClientes(ClienteController.searchClients(search));
+        } catch (DAOException | IOException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_PesquisarButtonActionPerformed
 
     private void cleanFields(){

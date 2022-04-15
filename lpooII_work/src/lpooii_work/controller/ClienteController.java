@@ -13,7 +13,6 @@ import lpooii_work.database.ConnectionFactory;
 import lpooii_work.database.DAOException;
 import lpooii_work.models.Cliente;
 import lpooii_work.models.dao.ClienteDAO;
-import lpooii_work.models.dao.ContaDAO;
 
 /**
  *
@@ -61,7 +60,13 @@ public class ClienteController {
         try (Connection con = new ConnectionFactory().getConnection()) {
             ClienteDAO clienteDao = new ClienteDAO(con);
             clienteDao.remover(c.getId());
-            
+        }
+    }
+
+    public static List<Cliente> searchClients(String search) throws DAOException, IOException, SQLException {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            ClienteDAO clienteDao = new ClienteDAO(con);
+            return clienteDao.searchClients(search);
         }
     }
     
@@ -125,5 +130,4 @@ public class ClienteController {
             return(false);
         }
     }
-
 }

@@ -9,9 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.swing.table.AbstractTableModel;
 import lpooii_work.database.DAOException;
 import lpooii_work.models.Cliente;
@@ -141,10 +138,10 @@ public class ClienteTable extends AbstractTableModel {
         return clientes.get(linha);
     }
     
-    public void searchCliente(String search) {
-        List<Cliente> filteredClientes = this.clientes.stream()
-            .filter(cliente -> cliente.getFullName().contains(search) || cliente.getRg().contains(search) || cliente.getCpf().contains(search))
-            .collect(Collectors.toList());
-        this.setClientes(filteredClientes);
-    }
+//    public void searchCliente(String search) {
+//        List<Cliente> filteredClientes = this.clientes.stream()
+//            .filter(cliente -> cliente.getFullName().contains(search) || cliente.getRg().contains(search) || cliente.getCpf().contains(search))
+//            .collect(Collectors.toList());
+//        this.setClientes(filteredClientes);
+//    }
 }
