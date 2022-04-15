@@ -41,10 +41,10 @@ INSERT INTO tb_conta(saldo_conta, deposito_minimo_conta, montante_minimo_conta, 
 VALUES (655.25, 10.0, 300.0, 2);
 
 INSERT INTO tb_cliente(nome_cliente, sobrenome_cliente, rg_cliente, cpf_cliente, endereco_cliente, id_conta)
-VALUES ('cliente 1', 'sobrenome 1', '00001', '100000', 'endereco 1', 1);
+VALUES ('cliente 1', 'sobrenome 1', '418757896', '56989846380', 'endereco 1', 1);
 
 INSERT INTO tb_cliente(nome_cliente, sobrenome_cliente, rg_cliente, cpf_cliente, endereco_cliente, id_conta)
-VALUES ('cliente 2', 'sobrenome 2', '00002', '200000', 'endereco 2', 2);
+VALUES ('cliente 2', 'sobrenome 2', '911225341', '31436693144', 'endereco 2', 2);
 
 INSERT INTO tb_cliente(nome_cliente, sobrenome_cliente, rg_cliente, cpf_cliente, endereco_cliente, id_conta)
-VALUES ('cliente 3', 'sobrenome 3', '00003', '300000', 'endereco 3', null);
+VALUES ('cliente 3', 'sobrenome 3', '418757896', '41303763494', 'endereco 3', null);
