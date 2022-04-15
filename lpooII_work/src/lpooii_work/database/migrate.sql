@@ -19,12 +19,12 @@ CREATE TABLE tb_cliente (
     sobrenome_cliente VARCHAR(50) NOT NULL,
     rg_cliente VARCHAR(15) NOT NULL,
     cpf_cliente VARCHAR(15) NOT NULL,
-    endereco_cliente VARCHAR(100)
+    endereco_cliente VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE tb_conta (
     id_conta serial PRIMARY KEY,
-    saldo_conta DOUBLE PRECISION,
+    saldo_conta DOUBLE PRECISION NOT NULL,
     deposito_inicial_conta DOUBLE PRECISION,
     deposito_minimo_conta DOUBLE PRECISION,
     limite_conta DOUBLE PRECISION,
