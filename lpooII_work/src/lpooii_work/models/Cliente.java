@@ -4,6 +4,11 @@
  */
 package lpooii_work.models;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import lpooii_work.controller.ContaController;
+import lpooii_work.database.DAOException;
+
 /**
  *
  * @author leonardozanotti
@@ -18,26 +23,15 @@ public class Cliente implements Comparable {
         this.rg = rg;
         this.cpf = cpf;
         this.endereco = endereco;
-        this.conta = 0;
     }
     
-    public Cliente(String nome, String sobrenome, String rg, String cpf, String endereco, int conta) {
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.rg = rg;
-        this.cpf = cpf;
-        this.endereco = endereco;
-        this.conta = conta;
-    }
-    
-    public Cliente(int id, String nome, String sobrenome, String rg, String cpf, String endereco, int conta) {
+    public Cliente(int id, String nome, String sobrenome, String rg, String cpf, String endereco) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.rg = rg;
         this.cpf = cpf;
         this.endereco = endereco;
-        this.conta = conta;
     }
     
     public String getFullName() {
@@ -92,14 +86,6 @@ public class Cliente implements Comparable {
         this.id = id;
     }
 
-    public int getConta() {
-        return conta;
-    }
-
-    public void setConta(int conta) {
-        this.conta = conta;
-    }
-
     @Override
     public int compareTo(Object cliente) {
         Cliente c = (Cliente) cliente;
@@ -108,6 +94,14 @@ public class Cliente implements Comparable {
 
     @Override
     public String toString() {
-        return "Cliente{" + "nome=" + nome + ", sobrenome=" + sobrenome + ", rg=" + rg + ", cpf=" + cpf + ", endereco=" + endereco + ", id=" + id + ", conta=" + conta + '}';
+        return "Cliente{" + "nome=" + nome + ", sobrenome=" + sobrenome + ", rg=" + rg + ", cpf=" + cpf + ", endereco=" + endereco + ", id=" + id + '}';
+    }
+    
+    public Conta getConta() throws DAOException, IOException, SQLException {
+        return ContaController.getByCliente(this);
+    }
+    
+    public void setConta(int conta) {
+        this.conta = conta;
     }
 }

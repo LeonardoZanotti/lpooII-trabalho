@@ -4,11 +4,16 @@
  */
 package lpooii_work.view.table;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.table.AbstractTableModel;
+import lpooii_work.database.DAOException;
 import lpooii_work.models.Cliente;
 
 /**
@@ -56,7 +61,14 @@ public class ClienteTable extends AbstractTableModel {
             case 2: return cliente.getRg();
             case 3: return cliente.getCpf();
             case 4: return cliente.getEndereco();
-            case 5: return cliente.getConta() != 0 ? (cliente.getConta() == 1 ? "Corrente" : "Investimento") : "Sem conta";
+            case 5: {
+                try {
+                    return cliente.getConta() != null ? (cliente.getConta().getTipo() == 1 ? "Corrente" : "Investimento") : "Sem conta";
+                } catch (DAOException | IOException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
             default : return null;
         }
     }

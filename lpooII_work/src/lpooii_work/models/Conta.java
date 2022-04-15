@@ -4,14 +4,17 @@
  */
 package lpooii_work.models;
 
-import lpooii_work.models.ContaI;
+import java.io.IOException;
+import java.sql.SQLException;
+import lpooii_work.controller.ClienteController;
+import lpooii_work.database.DAOException;
 
 /**
  *
  * @author leonardozanotti
  */
 public abstract class Conta implements ContaI {
-    public int id, tipo;
+    public int id, tipo, idCliente;
     public double saldo = 0, depositoInicial, limite, montanteMinimo, depositoMinimo;
 
     public Conta() {
@@ -36,10 +39,22 @@ public abstract class Conta implements ContaI {
         return true;
     }
 
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+    
     @Override
     public Cliente getDono() {
-        // get data from database (find client where account id equals this id)
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return ClienteController.buscar(this.idCliente);
+        } catch (DAOException | IOException | SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

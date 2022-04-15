@@ -9,17 +9,21 @@ package lpooii_work.models;
  * @author leonardozanotti
  */
 public class ContaCorrente extends Conta {
-    public ContaCorrente(double saldo, double depositoInicial, double limite) {
+    public ContaCorrente(double saldo, double depositoInicial, double limite, int tipo, int idCliente) {
         this.saldo = saldo;
         this.depositoInicial = depositoInicial;
         this.limite = limite;
+        this.tipo = tipo;
+        this.idCliente = idCliente;
     }
     
-    public ContaCorrente(int id, double saldo, double depositoInicial, double limite) {
+    public ContaCorrente(int id, double saldo, double depositoInicial, double limite, int tipo, int idCliente) {
         this.id = id;
         this.saldo = saldo;
         this.depositoInicial = depositoInicial;
         this.limite = limite;
+        this.tipo = tipo;
+        this.idCliente = idCliente;
     }
 
     @Override

@@ -11,6 +11,7 @@ import lpooii_work.models.dao.ContaDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import lpooii_work.database.DAOException;
+import lpooii_work.models.Cliente;
 
 /**
  *
@@ -22,6 +23,13 @@ public class ContaController {
         try (Connection con = new ConnectionFactory().getConnection()) {
             ContaDAO dao = new ContaDAO(con);
             dao.inserir(conta);
+        }
+    }
+
+    public static Conta getByCliente(Cliente cliente) throws DAOException, IOException, SQLException {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            ContaDAO dao = new ContaDAO(con);
+            return dao.getByCliente(cliente.getId());
         }
     }
     

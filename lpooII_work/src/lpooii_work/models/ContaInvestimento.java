@@ -9,19 +9,23 @@ package lpooii_work.models;
  * @author leonardozanotti
  */
 public class ContaInvestimento extends Conta {
-    public ContaInvestimento(double saldo, double montanteMinimo, double depositoMinimo, double depositoInicial) {
+    public ContaInvestimento(double saldo, double montanteMinimo, double depositoMinimo, double depositoInicial, int tipo, int idCliente) {
         this.saldo = saldo;
         this.montanteMinimo = montanteMinimo;
         this.depositoMinimo = depositoMinimo;
         this.depositoInicial = depositoInicial;
+        this.tipo = tipo;
+        this.idCliente = idCliente;
     }
     
-    public ContaInvestimento(int id, double saldo, double montanteMinimo, double depositoMinimo, double depositoInicial) {
+    public ContaInvestimento(int id, double saldo, double montanteMinimo, double depositoMinimo, double depositoInicial, int tipo, int idCliente) {
         this.id = id;
         this.saldo = saldo;
         this.montanteMinimo = montanteMinimo;
         this.depositoMinimo = depositoMinimo;
         this.depositoInicial = depositoInicial;
+        this.tipo = tipo;
+        this.idCliente = idCliente;
     }
 
     @Override

@@ -6,8 +6,6 @@ package lpooii_work.view;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import lpooii_work.controller.ClienteController;
 import lpooii_work.database.DAOException;
@@ -247,7 +245,7 @@ public class ClienteScreen extends javax.swing.JFrame {
         String cpf = this.CPFField.getText();
         String endereco = this.EnderecoField.getText();
         if (nome.length() > 0 && sobrenome.length() > 0 && rg.length() > 0 && cpf.length() > 0 && endereco.length() > 0) {
-            Cliente updatedCliente = new Cliente(clienteToUpdate.getId(), nome, sobrenome, rg, cpf, endereco, clienteToUpdate.getConta());
+            Cliente updatedCliente = new Cliente(clienteToUpdate.getId(), nome, sobrenome, rg, cpf, endereco);
             try {
                 ClienteController.atualizar(updatedCliente);
             } catch (DAOException | IOException | SQLException e) {

@@ -29,6 +29,15 @@ public class ClienteController {
         }
         return clientes;
     }
+    
+    public static Cliente buscar(int id) throws DAOException, IOException, SQLException {
+        Cliente cliente;
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            ClienteDAO dao = new ClienteDAO(con);
+            cliente = dao.buscar(id);
+        }
+        return cliente;
+    }
 
     public static void inserir(Cliente c) throws DAOException, IOException, SQLException {
         try (Connection con = new ConnectionFactory().getConnection()) {
@@ -51,7 +60,6 @@ public class ClienteController {
     public static void remover(Cliente c) throws DAOException, IOException, SQLException {
         try (Connection con = new ConnectionFactory().getConnection()) {
             ClienteDAO clienteDao = new ClienteDAO(con);
-            if (c.getConta() != 0) new ContaDAO(con).remover(c.getConta());
             clienteDao.remover(c.getId());
             
         }

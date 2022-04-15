@@ -6,6 +6,8 @@ package lpooii_work.view;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import lpooii_work.controller.ClienteController;
 import lpooii_work.controller.ContaController;
@@ -231,23 +233,25 @@ public class NovaContaScreen extends javax.swing.JFrame {
         if ("".equals(input1) || "".equals(input2) || ("".equals(input3) && selectedConta.equals("Conta investimento")) || clienteToAction == null) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos e selecione um cliente!", "Erro criando conta", JOptionPane.ERROR_MESSAGE);
             return;
-        } else if (clienteToAction.getConta() != 0) {
-            JOptionPane.showMessageDialog(null, "Cliente já possui conta!", "Erro criando conta", JOptionPane.ERROR_MESSAGE);
-            return;
+        } else try {
+            if (clienteToAction.getConta() != null) {
+                JOptionPane.showMessageDialog(null, "Cliente já possui conta!", "Erro criando conta", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (DAOException | IOException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro buscando conta do cliente!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
         Conta conta;
         if (selectedConta.equals("Conta corrente")) {
             double depositoInicial = Double.parseDouble(input1);
             double limite = Double.parseDouble(input2);
-            conta = (ContaCorrente) new ContaCorrente(0.0, depositoInicial, limite);
-            conta.setTipo(1);
+            conta = (ContaCorrente) new ContaCorrente(0.0, depositoInicial, limite, 1, clienteToAction.getId());
         } else {
             double montanteMinimo = Double.parseDouble(input1);
             double depositoMinimo = Double.parseDouble(input2);
             double depositoInicial = Double.parseDouble(input3);
-            conta = (ContaInvestimento) new ContaInvestimento(0.0, montanteMinimo, depositoMinimo, depositoInicial);
-            conta.setTipo(2);
+            conta = (ContaInvestimento) new ContaInvestimento(0.0, montanteMinimo, depositoMinimo, depositoInicial, 2, clienteToAction.getId());
         }
         
         try {
