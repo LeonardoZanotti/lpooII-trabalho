@@ -25,7 +25,8 @@ import lpooii_work.models.ContaInvestimento;
  * @author leonardozanotti
  */
 public class ContaDAO implements DAO<Conta> {
-    private static final String QUERY_INSERIR = "INSERT INTO tb_conta (saldo_conta, deposito_inicial_conta, deposito_minimo_conta, limite_conta, montante_minimo_conta, tipo_conta) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String QUERY_INSERIR_CONTA_CORRENTE = "INSERT INTO tb_conta (saldo_conta, deposito_inicial_conta, limite_conta, tipo_conta) VALUES (?, ?, ?, ?)";
+    private static final String QUERY_INSERIR_CONTA_INVESTIMENTO = "INSERT INTO tb_conta (saldo_conta, deposito_inicial_conta, deposito_minimo_conta, montante_minimo_conta, tipo_conta) VALUES (?, ?, ?, ?, ?)";
     private static final String QUERY_BUSCAR = "SELECT * FROM tb_conta WHERE id_conta = (?)";
     private static final String QUERY_REMOVER = "DELETE FROM tb_conta WHERE id_conta = (?)";
     private Connection con = null;
@@ -71,21 +72,32 @@ public class ContaDAO implements DAO<Conta> {
 
     @Override
     public void inserir(Conta c) throws DAOException {
-        try (PreparedStatement st = con.prepareStatement(ContaDAO.QUERY_INSERIR)) {
+        String realQuery = ContaDAO.QUERY_INSERIR_CONTA_CORRENTE;
+        if (c.getTipo() == 2) realQuery = ContaDAO.QUERY_INSERIR_CONTA_INVESTIMENTO;
+        try (PreparedStatement st = con.prepareStatement(realQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
             if (c.getTipo() == 1) {     // conta corrente
                 st.setDouble(1, c.getSaldo());
                 st.setDouble(2, c.getDepositoInicial());
-                st.setDouble(4, c.getLimite());
+                st.setDouble(3, c.getLimite());
+                st.setInt(4, c.getTipo());
             } else {                    // conta investimento
                 st.setDouble(1, c.getSaldo());
                 st.setDouble(2, c.getDepositoInicial());
                 st.setDouble(3, c.getDepositoMinimo());
-                st.setDouble(5, c.getMontanteMinimo());
+                st.setDouble(4, c.getMontanteMinimo());
+                st.setInt(5, c.getTipo());
             }
-            st.setInt(6, c.getTipo());
             st.executeUpdate();
+            
+            try (ResultSet generatedKeys = st.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    c.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Inserção não retornou id.");
+                }
+            }
         } catch (SQLException e) {
-            throw new DAOException("Erro inserindo conta: " + ContaDAO.QUERY_INSERIR + "/ " + c.toString(), e);
+            throw new DAOException("Erro inserindo conta: " + realQuery + "/ " + c.toString(), e);
         }
     }
 
@@ -97,8 +109,7 @@ public class ContaDAO implements DAO<Conta> {
     @Override
     public void remover(long id) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(ContaDAO.QUERY_REMOVER)) {
-            Conta c = this.buscar(id);
-            st.setInt(1, c.getId());
+            st.setLong(1, id);
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro removendo conta: " + ContaDAO.QUERY_REMOVER + "/ id=" + id, e);

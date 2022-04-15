@@ -13,6 +13,7 @@ import lpooii_work.database.ConnectionFactory;
 import lpooii_work.database.DAOException;
 import lpooii_work.models.Cliente;
 import lpooii_work.models.dao.ClienteDAO;
+import lpooii_work.models.dao.ContaDAO;
 
 /**
  *
@@ -49,8 +50,10 @@ public class ClienteController {
 
     public static void remover(Cliente c) throws DAOException, IOException, SQLException {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            ClienteDAO dao = new ClienteDAO(con);
-            dao.remover(c.getId());
+            ClienteDAO clienteDao = new ClienteDAO(con);
+            if (c.getConta() != 0) new ContaDAO(con).remover(c.getConta());
+            clienteDao.remover(c.getId());
+            
         }
     }
     

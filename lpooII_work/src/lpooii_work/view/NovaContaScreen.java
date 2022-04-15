@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import lpooii_work.controller.ClienteController;
+import lpooii_work.controller.ContaController;
 import lpooii_work.database.DAOException;
 import lpooii_work.models.Cliente;
 import lpooii_work.models.Conta;
@@ -240,14 +241,24 @@ public class NovaContaScreen extends javax.swing.JFrame {
             double depositoInicial = Double.parseDouble(input1);
             double limite = Double.parseDouble(input2);
             conta = (ContaCorrente) new ContaCorrente(0.0, depositoInicial, limite);
+            conta.setTipo(1);
         } else {
             double montanteMinimo = Double.parseDouble(input1);
             double depositoMinimo = Double.parseDouble(input2);
             double depositoInicial = Double.parseDouble(input3);
             conta = (ContaInvestimento) new ContaInvestimento(0.0, montanteMinimo, depositoMinimo, depositoInicial);
+            conta.setTipo(2);
         }
         
-        // salvar conta no banco e atrelar id ao cliente
+        try {
+            ContaController.inserir(conta);
+            this.clienteToAction.setConta(conta.getId());
+            ClienteController.atualizar(this.clienteToAction);
+            JOptionPane.showMessageDialog(null, "Conta criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            this.cleanAllFields();
+        } catch (DAOException | IOException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_CriarContaButtonActionPerformed
 
     private void setAllClients() {
@@ -256,6 +267,15 @@ public class NovaContaScreen extends javax.swing.JFrame {
         } catch (DAOException | IOException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    private void cleanAllFields() {
+        clienteTableModel.cleanTable();
+        this.setAllClients();
+        this.ContaBox.setSelectedIndex(0);
+        this.Input1.setText("");
+        this.Input2.setText("");
+        this.Input3.setText("");
     }
     /**
      * @param args the command line arguments

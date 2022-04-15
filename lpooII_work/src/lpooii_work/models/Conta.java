@@ -51,6 +51,10 @@ public abstract class Conta implements ContaI {
     public int getTipo() {
         return this.tipo;
     }
+    
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
 
     @Override
     public double getSaldo() {
