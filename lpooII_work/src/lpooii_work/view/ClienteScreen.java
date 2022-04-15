@@ -29,6 +29,7 @@ public class ClienteScreen extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Cliente");
+        this.setResizable(false);
         try {
             clienteTableModel.setClientes(ClienteController.buscarTodos());
         } catch (DAOException | IOException | SQLException e) {

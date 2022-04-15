@@ -4,7 +4,11 @@
  */
 package lpooii_work.view;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import lpooii_work.controller.ClienteController;
+import lpooii_work.database.DAOException;
 import lpooii_work.models.Cliente;
 import lpooii_work.models.Conta;
 import lpooii_work.models.ContaCorrente;
@@ -27,12 +31,8 @@ public class NovaContaScreen extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Nova conta");
-        
-        Cliente c1 = new Cliente("nome 1", "sobrenome 1", "123", "456", "endereco 1");
-        Cliente c2 = new Cliente("nome 2", "sobrenome 2", "321", "654", "endereco 2");
-        this.clienteTableModel.addCliente(c1);
-        this.clienteTableModel.addCliente(c2);
-        
+        this.setResizable(false);
+        this.setAllClients();
         this.Label3.setVisible(false);
         this.Input3.setVisible(false);
     }
@@ -203,6 +203,7 @@ public class NovaContaScreen extends javax.swing.JFrame {
 
     private void PesquisarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarButtonActionPerformed
         String search = this.SearchField.getText();
+        if (search.length() == 0) this.setAllClients();
         clienteTableModel.searchCliente(search);
     }//GEN-LAST:event_PesquisarButtonActionPerformed
 
@@ -229,6 +230,9 @@ public class NovaContaScreen extends javax.swing.JFrame {
         if ("".equals(input1) || "".equals(input2) || ("".equals(input3) && selectedConta.equals("Conta investimento")) || clienteToAction == null) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos e selecione um cliente!", "Erro criando conta", JOptionPane.ERROR_MESSAGE);
             return;
+        } else if (clienteToAction.getConta() != 0) {
+            JOptionPane.showMessageDialog(null, "Cliente já possui conta!", "Erro criando conta", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         Conta conta;
@@ -246,6 +250,13 @@ public class NovaContaScreen extends javax.swing.JFrame {
         // salvar conta no banco e atrelar id ao cliente
     }//GEN-LAST:event_CriarContaButtonActionPerformed
 
+    private void setAllClients() {
+        try {
+            clienteTableModel.setClientes(ClienteController.buscarTodos());
+        } catch (DAOException | IOException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * @param args the command line arguments
      */

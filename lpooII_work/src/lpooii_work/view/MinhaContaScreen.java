@@ -22,7 +22,7 @@ public class MinhaContaScreen extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Minha conta");
-        
+        this.setResizable(false);
         SaqueButton.setEnabled(false);
         DepositoButton.setEnabled(false);
         SaldoButton.setEnabled(false);

@@ -17,6 +17,7 @@ public class HomeScreen extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Home");
+        this.setResizable(false);
     }
 
     /**
