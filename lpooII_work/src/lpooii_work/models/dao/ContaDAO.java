@@ -29,6 +29,7 @@ public class ContaDAO implements DAO<Conta> {
     private static final String QUERY_INSERIR_CONTA_INVESTIMENTO = "INSERT INTO tb_conta (saldo_conta, deposito_inicial_conta, deposito_minimo_conta, montante_minimo_conta, tipo_conta, id_cliente) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String QUERY_BUSCAR = "SELECT * FROM tb_conta WHERE id_conta = (?)";
     private static final String QUERY_BUSCAR_POR_CLIENTE = "SELECT * FROM tb_conta WHERE id_cliente = (?)";
+    private static final String QUERY_BUSCAR_POR_CPF = "SELECT * FROM tb_conta INNER JOIN tb_cliente on tb_conta.id_cliente = tb_cliente.id_cliente WHERE tb_cliente.cpf_cliente LIKE CONCAT('%',?,'%')";
     private static final String QUERY_REMOVER = "DELETE FROM tb_conta WHERE id_conta = (?)";
     private Connection con = null;
 
@@ -142,6 +143,36 @@ public class ContaDAO implements DAO<Conta> {
             return null;
         } catch (SQLException e) {
             throw new DAOException("Erro buscando conta do cliente: " + ContaDAO.QUERY_BUSCAR_POR_CLIENTE, e);
+        }
+    }
+
+    public Conta getContaByCPF(String search) throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(ContaDAO.QUERY_BUSCAR_POR_CPF)) {
+            st.setString(1, search);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next())
+                    if (rs.getInt("tipo_conta") == 1)
+                        return new ContaCorrente(
+                                rs.getInt("id_conta"),
+                                rs.getDouble("deposito_inicial_conta"),
+                                rs.getDouble("limite_conta"),
+                                rs.getInt("tipo_conta"),
+                                rs.getInt("id_cliente")
+                        );
+                    else
+                        return new ContaInvestimento(
+                                rs.getInt("id_conta"),
+                                rs.getDouble("saldo_conta"),
+                                rs.getDouble("montante_minimo_conta"),
+                                rs.getDouble("deposito_minimo_conta"),
+                                rs.getDouble("deposito_inicial_conta"),
+                                rs.getInt("tipo_conta"),
+                                rs.getInt("id_cliente")
+                        );
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new DAOException("Erro buscando conta do cliente pelo CPF: " + ContaDAO.QUERY_BUSCAR_POR_CPF, e);
         }
     }
 }

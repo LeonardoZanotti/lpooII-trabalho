@@ -32,5 +32,12 @@ public class ContaController {
             return dao.getByCliente(cliente.getId());
         }
     }
+
+    public static Conta getContaByCPF(String search) throws DAOException, IOException, SQLException {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            ContaDAO dao = new ContaDAO(con);
+            return dao.getContaByCPF(search);
+        }
+    }
     
 }

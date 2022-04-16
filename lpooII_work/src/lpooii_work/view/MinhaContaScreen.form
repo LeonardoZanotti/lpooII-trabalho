@@ -45,6 +45,7 @@
                       <Component id="PesquisarLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="SearchField" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
                       <Component id="PesquisarButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="selecionadoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="SaldoButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -70,14 +71,16 @@
                   <Component id="SearchField" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="PesquisarButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="selecionadoLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="SaldoButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="SaqueButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="DepositoButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="RemunerarButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="85" max="32767" attributes="0"/>
+                  <EmptySpace pref="54" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -137,6 +140,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PesquisarButtonActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="selecionadoLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Nenhum cliente selecionado!"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

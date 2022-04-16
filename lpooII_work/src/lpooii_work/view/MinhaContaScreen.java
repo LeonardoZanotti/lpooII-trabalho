@@ -4,8 +4,11 @@
  */
 package lpooii_work.view;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import lpooii_work.models.Cliente;
+import lpooii_work.controller.ContaController;
+import lpooii_work.database.DAOException;
 import lpooii_work.models.Conta;
 
 /**
@@ -47,6 +50,7 @@ public class MinhaContaScreen extends javax.swing.JFrame {
         PesquisarLabel = new javax.swing.JLabel();
         SearchField = new javax.swing.JTextField();
         PesquisarButton = new javax.swing.JButton();
+        selecionadoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,6 +98,8 @@ public class MinhaContaScreen extends javax.swing.JFrame {
             }
         });
 
+        selecionadoLabel.setText("Nenhum cliente selecionado!");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -105,6 +111,7 @@ public class MinhaContaScreen extends javax.swing.JFrame {
                     .addComponent(PesquisarLabel)
                     .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PesquisarButton)
+                    .addComponent(selecionadoLabel)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(SaldoButton)
                         .addGap(18, 18, 18)
@@ -126,13 +133,15 @@ public class MinhaContaScreen extends javax.swing.JFrame {
                 .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PesquisarButton)
-                .addGap(64, 64, 64)
+                .addGap(31, 31, 31)
+                .addComponent(selecionadoLabel)
+                .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SaldoButton)
                     .addComponent(SaqueButton)
                     .addComponent(DepositoButton)
                     .addComponent(RemunerarButton))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,13 +166,24 @@ public class MinhaContaScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_VoltarButtonActionPerformed
 
     private void PesquisarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarButtonActionPerformed
-        String search = this.SearchField.getText();
-//        clienteConta = ClienteDAO.getContaByCPF(search);
-        if (clienteConta != null || 1 == 1) {
-            SaqueButton.setEnabled(true);
-            DepositoButton.setEnabled(true);
-            SaldoButton.setEnabled(true);
-            RemunerarButton.setEnabled(true);
+        try {
+            String search = this.SearchField.getText();
+            clienteConta = ContaController.getContaByCPF(search);
+            if (clienteConta != null) {
+                this.selecionadoLabel.setText("Cliente selecionado: " + clienteConta.getDono().getFullName());
+                SaqueButton.setEnabled(true);
+                DepositoButton.setEnabled(true);
+                SaldoButton.setEnabled(true);
+                RemunerarButton.setEnabled(true);
+            } else {
+                this.selecionadoLabel.setText("Nenhum cliente selecionado!");
+                SaqueButton.setEnabled(false);
+                DepositoButton.setEnabled(false);
+                SaldoButton.setEnabled(false);
+                RemunerarButton.setEnabled(false);
+            }
+        } catch (DAOException | IOException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro buscando conta por CPF!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_PesquisarButtonActionPerformed
 
@@ -238,5 +258,6 @@ public class MinhaContaScreen extends javax.swing.JFrame {
     private javax.swing.JTextField SearchField;
     private javax.swing.JButton VoltarButton;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel selecionadoLabel;
     // End of variables declaration//GEN-END:variables
 }
