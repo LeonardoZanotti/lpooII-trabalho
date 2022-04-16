@@ -15,7 +15,7 @@ import lpooii_work.database.DAOException;
  */
 public class Cliente implements Comparable {
     private String nome, sobrenome, rg, cpf, endereco;
-    private int id, conta;
+    private int id;
     
     public Cliente(String nome, String sobrenome, String rg, String cpf, String endereco) {
         this.nome = nome;
@@ -99,9 +99,5 @@ public class Cliente implements Comparable {
     
     public Conta getConta() throws DAOException, IOException, SQLException {
         return ContaController.getByCliente(this);
-    }
-    
-    public void setConta(int conta) {
-        this.conta = conta;
     }
 }

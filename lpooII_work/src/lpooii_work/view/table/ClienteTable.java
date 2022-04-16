@@ -19,7 +19,7 @@ import lpooii_work.models.Cliente;
  */
 public class ClienteTable extends AbstractTableModel {
     private List<Cliente> clientes = new ArrayList();
-    private String[] columns = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço", "Conta"};
+    private final String[] columns = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço", "Conta"};
 
     public ClienteTable() {
         
@@ -90,9 +90,8 @@ public class ClienteTable extends AbstractTableModel {
                 cliente.setEndereco((String) value);
                 break;
             case 5:
-                cliente.setConta((int) value);
-                break;
             default:
+                break;
         }
         this.fireTableCellUpdated(row, col);
     }

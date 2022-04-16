@@ -6,8 +6,6 @@ package lpooii_work.view;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import lpooii_work.controller.ClienteController;
 import lpooii_work.database.DAOException;

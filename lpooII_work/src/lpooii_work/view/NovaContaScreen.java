@@ -257,8 +257,6 @@ public class NovaContaScreen extends javax.swing.JFrame {
         
         try {
             ContaController.inserir(conta);
-            this.clienteToAction.setConta(conta.getId());
-            ClienteController.atualizar(this.clienteToAction);
             JOptionPane.showMessageDialog(null, "Conta criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.cleanAllFields();
         } catch (DAOException | IOException | SQLException e) {
