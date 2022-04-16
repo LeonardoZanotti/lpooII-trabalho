@@ -24,7 +24,7 @@ public abstract class Conta implements ContaI {
     
     @Override
     public boolean deposita(double valor) {
-        if (valor <= 0)
+        if (valor <= 0 || this.saldo == 0 && valor < depositoInicial)
             return false;
         this.saldo += valor;
         try {
