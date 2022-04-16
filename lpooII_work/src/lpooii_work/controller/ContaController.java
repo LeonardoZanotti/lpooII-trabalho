@@ -39,5 +39,12 @@ public class ContaController {
             return dao.getContaByCPF(search);
         }
     }
+
+    public static void atualizar(Conta conta) throws DAOException, IOException, SQLException {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            ContaDAO dao = new ContaDAO(con);
+            dao.atualizar(conta);
+        }
+    }
     
 }

@@ -7,6 +7,7 @@ package lpooii_work.models;
 import java.io.IOException;
 import java.sql.SQLException;
 import lpooii_work.controller.ClienteController;
+import lpooii_work.controller.ContaController;
 import lpooii_work.database.DAOException;
 
 /**
@@ -25,8 +26,12 @@ public abstract class Conta implements ContaI {
     public boolean deposita(double valor) {
         if (valor <= 0)
             return false;
-        // show message in the screen
         this.saldo += valor;
+        try {
+            ContaController.atualizar(this);
+        } catch (DAOException | IOException | SQLException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -34,8 +39,12 @@ public abstract class Conta implements ContaI {
     public boolean saca(double valor) {
         if (valor <= 0)
             return false;
-        // show message in the screen
         this.saldo -= valor;
+        try {
+            ContaController.atualizar(this);
+        } catch (DAOException | IOException | SQLException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 

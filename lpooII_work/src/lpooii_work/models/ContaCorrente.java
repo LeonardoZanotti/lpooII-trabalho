@@ -4,6 +4,11 @@
  */
 package lpooii_work.models;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import lpooii_work.controller.ContaController;
+import lpooii_work.database.DAOException;
+
 /**
  *
  * @author leonardozanotti
@@ -29,7 +34,6 @@ public class ContaCorrente extends Conta {
     @Override
     public boolean saca(double valor) {
         if (this.saldo - valor < limite) {
-            // saque inválido, mostrar na tela isso
             return false;
         }
         return super.saca(valor);
@@ -38,5 +42,10 @@ public class ContaCorrente extends Conta {
     @Override
     public void remunera() {
         this.saldo = this.saldo * 1.01;
+        try {
+            ContaController.atualizar(this);
+        } catch (DAOException | IOException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -191,7 +191,11 @@ public class MinhaContaScreen extends javax.swing.JFrame {
         String saqueString = JOptionPane.showInputDialog("Quanto quer sacar?");
         if (saqueString != null) {
             double saqueDouble = Double.parseDouble(saqueString);
-            JOptionPane.showMessageDialog(null, "Saque de R$" + saqueString + " efetuado com sucesso!", "Saque", JOptionPane.INFORMATION_MESSAGE);
+            if (clienteConta.saca(saqueDouble)) {
+                JOptionPane.showMessageDialog(null, "Saque de R$" + saqueString + " efetuado com sucesso!", "Saque", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Saque inválido!", "Saque", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_SaqueButtonActionPerformed
 
@@ -199,17 +203,21 @@ public class MinhaContaScreen extends javax.swing.JFrame {
         String depositoString = JOptionPane.showInputDialog("Quanto quer depositar?");
         if (depositoString != null) {
             double depositoDouble = Double.parseDouble(depositoString);
-            JOptionPane.showMessageDialog(null, "Depósito de R$" + depositoString + " efetuado com sucesso!", "Depósito", JOptionPane.INFORMATION_MESSAGE);
+            if (clienteConta.deposita(depositoDouble)) {
+                JOptionPane.showMessageDialog(null, "Depósito de R$" + depositoString + " efetuado com sucesso!", "Depósito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Depósito inválido!", "Depósito", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_DepositoButtonActionPerformed
 
     private void RemunerarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemunerarButtonActionPerformed
+        clienteConta.remunera();
         JOptionPane.showMessageDialog(null, "Conta remunerada com sucesso!", "Remunerar", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_RemunerarButtonActionPerformed
 
     private void SaldoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaldoButtonActionPerformed
-        double saldo = 10.00;
-        JOptionPane.showMessageDialog(null, "Seu saldo é de R$" + saldo, "Saldo", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Seu saldo é de R$" + String.format("%.2f", clienteConta.getSaldo()), "Saldo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_SaldoButtonActionPerformed
 
     /**

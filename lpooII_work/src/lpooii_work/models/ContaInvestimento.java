@@ -4,6 +4,11 @@
  */
 package lpooii_work.models;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import lpooii_work.controller.ContaController;
+import lpooii_work.database.DAOException;
+
 /**
  *
  * @author leonardozanotti
@@ -31,7 +36,6 @@ public class ContaInvestimento extends Conta {
     @Override
     public boolean saca(double valor) {
         if (this.saldo - valor < montanteMinimo) {
-            // saque inválido, mostrar na tela isso
             return false;
         }
         return super.saca(valor);
@@ -40,7 +44,6 @@ public class ContaInvestimento extends Conta {
     @Override
     public boolean deposita(double valor) {
         if (valor < this.depositoMinimo) {
-            // deposito inválido, mostrar na tela
             return false;
         }
         return super.deposita(valor);
@@ -49,5 +52,10 @@ public class ContaInvestimento extends Conta {
     @Override
     public void remunera() {
         this.saldo = this.saldo * 1.02;
+        try {
+            ContaController.atualizar(this);
+        } catch (DAOException | IOException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
