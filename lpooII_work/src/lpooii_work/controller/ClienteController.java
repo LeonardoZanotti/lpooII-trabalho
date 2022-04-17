@@ -19,11 +19,10 @@ import lpooii_work.models.dao.ClienteDAO;
  * @author leonardozanotti
  */
 public class ClienteController {
-
     public static List<Cliente> buscarTodos() throws DAOException, IOException, SQLException {
         List<Cliente> clientes;
-        try (Connection con = new ConnectionFactory().getConnection()) {
-            ClienteDAO dao = new ClienteDAO(con);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO dao = new ClienteDAO(factory.getConnection());
             clientes = dao.buscarTodos();
         }
         return clientes;
@@ -31,16 +30,16 @@ public class ClienteController {
     
     public static Cliente buscar(int id) throws DAOException, IOException, SQLException {
         Cliente cliente;
-        try (Connection con = new ConnectionFactory().getConnection()) {
-            ClienteDAO dao = new ClienteDAO(con);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO dao = new ClienteDAO(factory.getConnection());
             cliente = dao.buscar(id);
         }
         return cliente;
     }
 
     public static void inserir(Cliente c) throws DAOException, IOException, SQLException {
-        try (Connection con = new ConnectionFactory().getConnection()) {
-            ClienteDAO dao = new ClienteDAO(con);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO dao = new ClienteDAO(factory.getConnection());
             if (!ClienteController.validCPF(c.getCpf())) throw new DAOException("CPF inválido.");
             if (clientAlreadyExists(c)) throw new DAOException("Já existe cliente com este nome ou cpf.");
             dao.inserir(c);
@@ -48,25 +47,25 @@ public class ClienteController {
     }
 
     public static void atualizar(Cliente c) throws DAOException, IOException, SQLException {
-        try (Connection con = new ConnectionFactory().getConnection()) {
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO dao = new ClienteDAO(factory.getConnection());
             if (!ClienteController.validCPF(c.getCpf())) throw new DAOException("CPF inválido.");
             if (clientAlreadyExists(c)) throw new DAOException("Já existe cliente com este nome ou cpf.");
-            ClienteDAO dao = new ClienteDAO(con);
             dao.atualizar(c);
         }
     }
 
     public static void remover(Cliente c) throws DAOException, IOException, SQLException {
-        try (Connection con = new ConnectionFactory().getConnection()) {
-            ClienteDAO clienteDao = new ClienteDAO(con);
-            clienteDao.remover(c.getId());
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO dao = new ClienteDAO(factory.getConnection());
+            dao.remover(c.getId());
         }
     }
 
     public static List<Cliente> searchClients(String search) throws DAOException, IOException, SQLException {
-        try (Connection con = new ConnectionFactory().getConnection()) {
-            ClienteDAO clienteDao = new ClienteDAO(con);
-            return clienteDao.searchClients(search);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO dao = new ClienteDAO(factory.getConnection());
+            return dao.searchClients(search);
         }
     }
     

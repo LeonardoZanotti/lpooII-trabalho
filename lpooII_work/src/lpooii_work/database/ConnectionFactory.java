@@ -23,7 +23,7 @@ public class ConnectionFactory implements AutoCloseable {
         if (this.con == null) {
             try {
                 Properties prop = new Properties();
-                prop.load(getClass().getResourceAsStream("./database.properties"));
+                prop.load(getClass().getResourceAsStream("database.properties"));
                 ConnectionFactory.DRIVER = prop.getProperty("db.driver");
                 ConnectionFactory.URL = prop.getProperty("db.url");
                 ConnectionFactory.DATABASE = prop.getProperty("db.database");
@@ -44,14 +44,14 @@ public class ConnectionFactory implements AutoCloseable {
     }
     
     @Override
-    public void close() throws Exception {
+    public void close() {
         if (this.con != null) {
             try {
                 this.con.close();
                 this.con = null;
                 System.out.println("Connection closed!");
             }
-            catch (Exception e) {
+            catch (SQLException e) {
                 System.out.println("Erro fechando a conexão.");
                 e.printStackTrace();
             }

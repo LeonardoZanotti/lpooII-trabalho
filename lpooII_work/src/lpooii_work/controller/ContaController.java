@@ -18,31 +18,30 @@ import lpooii_work.models.Cliente;
  * @author leonardozanotti
  */
 public class ContaController {
-
     public static void inserir(Conta conta) throws DAOException, IOException, SQLException {
-        try (Connection con = new ConnectionFactory().getConnection()) {
-            ContaDAO dao = new ContaDAO(con);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ContaDAO dao = new ContaDAO(factory.getConnection());
             dao.inserir(conta);
         }
     }
 
     public static Conta getByCliente(Cliente cliente) throws DAOException, IOException, SQLException {
-        try (Connection con = new ConnectionFactory().getConnection()) {
-            ContaDAO dao = new ContaDAO(con);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ContaDAO dao = new ContaDAO(factory.getConnection());
             return dao.getByCliente(cliente.getId());
         }
     }
 
     public static Conta getContaByCPF(String search) throws DAOException, IOException, SQLException {
-        try (Connection con = new ConnectionFactory().getConnection()) {
-            ContaDAO dao = new ContaDAO(con);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ContaDAO dao = new ContaDAO(factory.getConnection());
             return dao.getContaByCPF(search);
         }
     }
 
     public static void atualizar(Conta conta) throws DAOException, IOException, SQLException {
-        try (Connection con = new ConnectionFactory().getConnection()) {
-            ContaDAO dao = new ContaDAO(con);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ContaDAO dao = new ContaDAO(factory.getConnection());
             dao.atualizar(conta);
         }
     }
