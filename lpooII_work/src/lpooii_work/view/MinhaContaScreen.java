@@ -16,6 +16,7 @@ import lpooii_work.models.Conta;
  * @author leonardozanotti
  */
 public class MinhaContaScreen extends javax.swing.JFrame {
+
     private Conta clienteConta;
 
     /**
@@ -189,25 +190,33 @@ public class MinhaContaScreen extends javax.swing.JFrame {
 
     private void SaqueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaqueButtonActionPerformed
         String saqueString = JOptionPane.showInputDialog("Quanto quer sacar?");
-        if (saqueString != null) {
-            double saqueDouble = Double.parseDouble(saqueString);
-            if (clienteConta.saca(saqueDouble)) {
-                JOptionPane.showMessageDialog(null, "Saque de R$" + saqueString + " efetuado com sucesso!", "Saque", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Saque inválido!", "Saque", JOptionPane.ERROR_MESSAGE);
+        try {
+            if (saqueString != null) {
+                double saqueDouble = Double.parseDouble(saqueString);
+                if (clienteConta.saca(saqueDouble)) {
+                    JOptionPane.showMessageDialog(null, "Saque de R$" + saqueString + " efetuado com sucesso!", "Saque", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Saque inválido!", "Saque", JOptionPane.ERROR_MESSAGE);
+                }
             }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Saque inválido!", "Saque", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_SaqueButtonActionPerformed
 
     private void DepositoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepositoButtonActionPerformed
         String depositoString = JOptionPane.showInputDialog("Quanto quer depositar?");
-        if (depositoString != null) {
-            double depositoDouble = Double.parseDouble(depositoString);
-            if (clienteConta.deposita(depositoDouble)) {
-                JOptionPane.showMessageDialog(null, "Depósito de R$" + depositoString + " efetuado com sucesso!", "Depósito", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Depósito inválido!", "Depósito", JOptionPane.ERROR_MESSAGE);
+        try {
+            if (depositoString != null) {
+                double depositoDouble = Double.parseDouble(depositoString);
+                if (clienteConta.deposita(depositoDouble)) {
+                    JOptionPane.showMessageDialog(null, "Depósito de R$" + depositoString + " efetuado com sucesso!", "Depósito", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Depósito inválido!", "Depósito", JOptionPane.ERROR_MESSAGE);
+                }
             }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Depósito inválido!", "Depósito", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_DepositoButtonActionPerformed
 

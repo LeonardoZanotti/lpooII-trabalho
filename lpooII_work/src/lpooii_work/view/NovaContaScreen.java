@@ -21,6 +21,7 @@ import lpooii_work.view.table.ClienteTable;
  * @author leonardozanotti
  */
 public class NovaContaScreen extends javax.swing.JFrame {
+
     private final ClienteTable clienteTableModel = new ClienteTable();
     private int clickedLine = -1;
     private Cliente clienteToAction;
@@ -243,24 +244,30 @@ public class NovaContaScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro buscando conta do cliente!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
-        Conta conta;
-        if (selectedConta.equals("Conta corrente")) {
-            double depositoInicial = Double.parseDouble(input1);
-            double limite = Double.parseDouble(input2);
-            conta = (ContaCorrente) new ContaCorrente(0.0, depositoInicial, limite, 1, clienteToAction.getId());
-        } else {
-            double montanteMinimo = Double.parseDouble(input1);
-            double depositoMinimo = Double.parseDouble(input2);
-            double depositoInicial = Double.parseDouble(input3);
-            conta = (ContaInvestimento) new ContaInvestimento(0.0, montanteMinimo, depositoMinimo, depositoInicial, 2, clienteToAction.getId());
+        Conta conta = null;
+        try {
+            if (selectedConta.equals("Conta corrente")) {
+                double depositoInicial = Double.parseDouble(input1);
+                double limite = Double.parseDouble(input2);
+                conta = (ContaCorrente) new ContaCorrente(0.0, depositoInicial, limite, 1, clienteToAction.getId());
+            } else {
+                double montanteMinimo = Double.parseDouble(input1);
+                double depositoMinimo = Double.parseDouble(input2);
+                double depositoInicial = Double.parseDouble(input3);
+                conta = (ContaInvestimento) new ContaInvestimento(0.0, montanteMinimo, depositoMinimo, depositoInicial, 2, clienteToAction.getId());
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Digite apenas numeros nos campos de deposito", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         try {
             ContaController.inserir(conta);
             JOptionPane.showMessageDialog(null, "Conta criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.cleanAllFields();
         } catch (DAOException | IOException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } catch (NullPointerException e) {
+
         }
     }//GEN-LAST:event_CriarContaButtonActionPerformed
 
@@ -271,7 +278,7 @@ public class NovaContaScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void cleanAllFields() {
         clienteTableModel.cleanTable();
         this.setAllClients();
@@ -280,6 +287,7 @@ public class NovaContaScreen extends javax.swing.JFrame {
         this.Input2.setText("");
         this.Input3.setText("");
     }
+
     /**
      * @param args the command line arguments
      */
