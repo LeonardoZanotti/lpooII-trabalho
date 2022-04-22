@@ -21,7 +21,6 @@ import lpooii_work.view.table.ClienteTable;
  * @author leonardozanotti
  */
 public class NovaContaScreen extends javax.swing.JFrame {
-
     private final ClienteTable clienteTableModel = new ClienteTable();
     private int clickedLine = -1;
     private Cliente clienteToAction;
@@ -264,10 +263,8 @@ public class NovaContaScreen extends javax.swing.JFrame {
             ContaController.inserir(conta);
             JOptionPane.showMessageDialog(null, "Conta criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.cleanAllFields();
-        } catch (DAOException | IOException | SQLException e) {
+        } catch (DAOException | IOException | SQLException | NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar a operação: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        } catch (NullPointerException e) {
-
         }
     }//GEN-LAST:event_CriarContaButtonActionPerformed
 

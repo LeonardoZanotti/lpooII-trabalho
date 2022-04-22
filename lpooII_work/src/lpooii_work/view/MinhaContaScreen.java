@@ -16,7 +16,6 @@ import lpooii_work.models.Conta;
  * @author leonardozanotti
  */
 public class MinhaContaScreen extends javax.swing.JFrame {
-
     private Conta clienteConta;
 
     /**
